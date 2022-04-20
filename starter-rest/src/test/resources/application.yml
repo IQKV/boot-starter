@@ -1,0 +1,7 @@
+build :
+  version : 1.0
+  description : "Test description"
+  relativePath : "/application"
+spring :
+  application :
+    name : "application"
