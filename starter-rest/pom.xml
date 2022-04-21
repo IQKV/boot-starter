@@ -16,6 +16,20 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+    <organization>
+        <name>uJar Bootcamp</name>
+        <url>https://www.ujar.org</url>
+    </organization>
+    <developers>
+        <developer>
+            <id>1</id>
+            <name>Dima Denysenko</name>
+            <email>coding@dimdnk.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
 
     <scm>
         <connection>scm:git:https://github.com/ujar-org/starter.git</connection>
