@@ -37,7 +37,7 @@ steps:
         from_secret : DEPLOYER_PASSWORD
     commands:
       - mvn compile test-compile com.github.spotbugs:spotbugs-maven-plugin:check pmd:check -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=false -Dspotbugs.includeTests=true --file starter-kafka/pom.xml -B -s starter-kafka/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn org.jacoco:jacoco-maven-plugin:0.8.8:prepare-agent clean package org.jacoco:jacoco-maven-plugin:report sonar:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=ujar-org:starter-kafka -Dsonar.projectName=ujar-org:starter-kafka --batch-mode --file starter-kafka/pom.xml -s starter-kafka/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - test --file starter-kafka/pom.xml -B -s starter-kafka/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
     when:
       branch:
         include:
