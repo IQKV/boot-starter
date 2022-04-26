@@ -16,10 +16,8 @@ steps:
       SONAR_TOKEN :
         from_secret : SONAR_TOKEN
     commands:
-      - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true -B -V --file starter-rest/pom.xml -s starter-rest/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn pmd:check --file starter-rest/pom.xml -B -s starter-rest/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn org.jacoco:jacoco-maven-plugin:0.8.8:prepare-agent test --file starter-rest/pom.xml -B -s starter-rest/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn -X org.jacoco:jacoco-maven-plugin:0.8.8:report org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=ujar-org:starter-rest -Dsonar.projectName=ujar-org:starter-rest --batch-mode --file starter-rest/pom.xml -s starter-rest/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn compile test-compile com.github.spotbugs:spotbugs-maven-plugin:check pmd:check -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=false -Dspotbugs.includeTests=true --file starter-rest/pom.xml -B -s starter-rest/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn org.jacoco:jacoco-maven-plugin:0.8.8:prepare-agent clean package org.jacoco:jacoco-maven-plugin:report sonar:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=ujar-org:starter-rest -Dsonar.projectName=ujar-org:starter-rest --batch-mode --file starter-rest/pom.xml -s starter-rest/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
     when:
       branch:
         include:
@@ -38,9 +36,8 @@ steps:
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands:
-      - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true -B -V --file starter-kafka/pom.xml -s starter-kafka/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn pmd:check --file starter-kafka/pom.xml -B -s starter-kafka/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn org.jacoco:jacoco-maven-plugin:0.8.8:prepare-agent test --file starter-kafka/pom.xml -B -s starter-kafka/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn compile test-compile com.github.spotbugs:spotbugs-maven-plugin:check pmd:check -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=false -Dspotbugs.includeTests=true --file starter-kafka/pom.xml -B -s starter-kafka/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn org.jacoco:jacoco-maven-plugin:0.8.8:prepare-agent clean package org.jacoco:jacoco-maven-plugin:report sonar:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=ujar-org:starter-kafka -Dsonar.projectName=ujar-org:starter-kafka --batch-mode --file starter-kafka/pom.xml -s starter-kafka/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
     when:
       branch:
         include:
