@@ -2,10 +2,18 @@ kind: pipeline
 name: build
 
 type : docker
+
+volumes:
+  - name: m2cache
+    host:
+      path: /var/cache/m2cache
 steps:
 
   - name: test starter-rest
-    image: maven:3-openjdk-17-slim-slim
+    image: maven:3-openjdk-17-slim
+    volumes :
+      - name : m2cache
+        path : /root/.m2
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
@@ -29,7 +37,10 @@ steps:
           - pull_request
 
   - name: test starter-kafka
-    image: maven:3-openjdk-17-slim-slim
+    image: maven:3-openjdk-17-slim
+    volumes :
+      - name : m2cache
+        path : /root/.m2
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
@@ -49,7 +60,10 @@ steps:
           - pull_request
 
   - name: publish-snapshot-package starter-rest
-    image: maven:3-openjdk-17-slim-slim
+    image: maven:3-openjdk-17-slim
+    volumes :
+      - name : m2cache
+        path : /root/.m2
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
@@ -68,7 +82,10 @@ steps:
           - pull_request
 
   - name: publish-release-package starter-rest
-    image: maven:3-openjdk-17-slim-slim
+    image: maven:3-openjdk-17-slim
+    volumes :
+      - name : m2cache
+        path : /root/.m2
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
@@ -81,7 +98,10 @@ steps:
 
 
   - name: publish-snapshot-package starter-kafka
-    image: maven:3-openjdk-17-slim-slim
+    image: maven:3-openjdk-17-slim
+    volumes :
+      - name : m2cache
+        path : /root/.m2
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
@@ -100,7 +120,10 @@ steps:
           - pull_request
 
   - name: publish-release-package starter-kafka
-    image: maven:3-openjdk-17-slim-slim
+    image: maven:3-openjdk-17-slim
+    volumes :
+      - name : m2cache
+        path : /root/.m2
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
