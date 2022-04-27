@@ -5,7 +5,7 @@ type : docker
 steps:
 
   - name: test starter-rest
-    image: maven:3-jdk-11-slim
+    image: maven:3-openjdk-17-slim-slim
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
@@ -29,7 +29,7 @@ steps:
           - pull_request
 
   - name: test starter-kafka
-    image: maven:3-jdk-11-slim
+    image: maven:3-openjdk-17-slim-slim
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
@@ -49,7 +49,7 @@ steps:
           - pull_request
 
   - name: publish-snapshot-package starter-rest
-    image: maven:3-jdk-11-slim
+    image: maven:3-openjdk-17-slim-slim
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
@@ -68,7 +68,7 @@ steps:
           - pull_request
 
   - name: publish-release-package starter-rest
-    image: maven:3-jdk-11-slim
+    image: maven:3-openjdk-17-slim-slim
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
@@ -81,7 +81,7 @@ steps:
 
 
   - name: publish-snapshot-package starter-kafka
-    image: maven:3-jdk-11-slim
+    image: maven:3-openjdk-17-slim-slim
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
@@ -100,7 +100,7 @@ steps:
           - pull_request
 
   - name: publish-release-package starter-kafka
-    image: maven:3-jdk-11-slim
+    image: maven:3-openjdk-17-slim-slim
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
