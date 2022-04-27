@@ -24,6 +24,7 @@ steps:
       SONAR_TOKEN :
         from_secret : SONAR_TOKEN
     commands:
+      - rm -rf /root/.m2/repository/org/ujar/
       - mvn compile test-compile com.github.spotbugs:spotbugs-maven-plugin:check pmd:check -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=false -Dspotbugs.includeTests=true --file starter-rest/pom.xml -B -s starter-rest/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn org.jacoco:jacoco-maven-plugin:prepare-agent clean package org.jacoco:jacoco-maven-plugin:report sonar:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=ujar-org:starter-rest -Dsonar.projectName=ujar-org:starter-rest --batch-mode --file starter-rest/pom.xml -s starter-rest/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
     when:
@@ -47,6 +48,7 @@ steps:
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands:
+        - rm -rf /root/.m2/repository/org/ujar/
         - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true -B -V --file starter-kafka/pom.xml -s starter-kafka/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
         - mvn pmd:check org.jacoco:jacoco-maven-plugin:prepare-agent test --file starter-kafka/pom.xml -B -s starter-kafka/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
     when:
