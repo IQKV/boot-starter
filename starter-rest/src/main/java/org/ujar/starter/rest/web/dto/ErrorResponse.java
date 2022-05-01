@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ErrorResponse {
+public class ErrorResponse<M> {
 
-  private List<Error> errors;
+  private List<Error<M>> errors;
 
-  public ErrorResponse(List<Error> errors) {
+  public ErrorResponse(List<Error<M>> errors) {
     this.errors = new ArrayList<>(errors);
   }
 
@@ -19,16 +19,7 @@ public class ErrorResponse {
     return new ErrorResponse(List.of(error));
   }
 
-  public static ErrorResponse withErrors(List<Error> errors) {
-    return new ErrorResponse(errors);
-  }
-
   public List<Error> getErrors() {
     return new ArrayList<>(errors);
   }
-
-  public void setErrors(List<Error> errors) {
-    this.errors = new ArrayList<>(errors);
-  }
-
 }
