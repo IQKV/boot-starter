@@ -21,7 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.ujar.starter.rest.web.RequestDto;
 
 @ExtendWith(SpringExtension.class)
-public class BadRequestBodyTest extends DefaultRestErrorHandlerTestBase {
+class BadRequestBodyTest extends DefaultRestErrorHandlerTestBase {
 
 
   @Test
