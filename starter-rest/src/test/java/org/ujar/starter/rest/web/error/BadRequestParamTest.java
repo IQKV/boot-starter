@@ -14,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
 @ExtendWith(SpringExtension.class)
-public class BadRequestParamTest extends DefaultRestErrorHandlerTestBase {
+class BadRequestParamTest extends DefaultRestErrorHandlerTestBase {
 
   @Test
   @SneakyThrows
