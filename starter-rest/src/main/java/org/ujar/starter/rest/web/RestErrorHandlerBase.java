@@ -29,30 +29,29 @@ import org.ujar.starter.rest.web.dto.UnknownErrorMeta;
 
 public class RestErrorHandlerBase {
 
-  public ErrorResponse handle(Exception exception, String code) {
-    return ErrorResponse.singleError(new Error(
+  public ErrorResponse<UnknownErrorMeta> handle(Exception exception, String code) {
+    return ErrorResponse.singleError(new Error<>(
         code,
         exception.getMessage(),
         UnknownErrorMeta.fromException(exception)
     ));
   }
 
-  public ErrorResponse handle(MethodArgumentNotValidException exception, String code) {
+  public ErrorResponse<InvalidRequestBodyMeta> handle(MethodArgumentNotValidException exception, String code) {
     var errors = exception.getBindingResult().getFieldErrors().stream()
         .map(error -> {
           var jsonPointer = getJsonPointerField(error);
-          return new Error(
+          return new Error<>(
               code,
               jsonPointer + " " + error.getDefaultMessage(),
               new InvalidRequestBodyMeta(jsonPointer, error.getRejectedValue()));
         })
-        .collect(Collectors.toList());
-    return ErrorResponse.withErrors(errors);
+        .toList();
+    return new ErrorResponse<>(errors);
   }
 
   public ErrorResponse handle(HttpMessageNotReadableException exception, String code) {
     Error error;
-
     if (exception.getCause() instanceof InvalidFormatException) {
       var formatException = (InvalidFormatException) exception.getCause();
       error = getErrorForInvalidFormat(formatException, code);
@@ -65,7 +64,7 @@ public class RestErrorHandlerBase {
     return ErrorResponse.singleError(error);
   }
 
-  public ErrorResponse handle(MissingServletRequestParameterException exception,
+  public ErrorResponse<InvalidRequestParameterMeta> handle(MissingServletRequestParameterException exception,
                               String code) {
     return ErrorResponse.singleError(new Error<>(
         code,
@@ -74,7 +73,7 @@ public class RestErrorHandlerBase {
     ));
   }
 
-  public ErrorResponse handle(TypeMismatchException exception, String code) {
+  public ErrorResponse<InvalidRequestParameterMeta> handle(TypeMismatchException exception, String code) {
     return ErrorResponse.singleError(new Error<>(
         code,
         exception.getMessage(),
@@ -84,7 +83,7 @@ public class RestErrorHandlerBase {
         )));
   }
 
-  public ErrorResponse handle(MethodArgumentTypeMismatchException exception,
+  public ErrorResponse<InvalidRequestParameterMeta> handle(MethodArgumentTypeMismatchException exception,
                               String code) {
     return ErrorResponse.singleError(new Error<>(
         code,
@@ -95,17 +94,17 @@ public class RestErrorHandlerBase {
         )));
   }
 
-  public ErrorResponse handle(ConstraintViolationException exception, String code) {
+  public ErrorResponse<InvalidRequestParameterMeta> handle(ConstraintViolationException exception, String code) {
     var errors = exception.getConstraintViolations().stream()
         .map(constraintViolation -> {
               var parameter = StreamSupport
                   .stream(constraintViolation.getPropertyPath().spliterator(), false)
-                  .collect(Collectors.toList())
+                  .toList()
                   // Path has the following structure: Method name -> Parameter name.
                   // So we fetch 2nd element of the collection
                   .get(1)
                   .toString();
-              return new Error(
+              return new Error<>(
                   code,
                   parameter + " " + constraintViolation.getMessage(),
                   new InvalidRequestParameterMeta(
@@ -115,13 +114,13 @@ public class RestErrorHandlerBase {
               );
             }
         )
-        .collect(Collectors.toList());
-    return ErrorResponse.withErrors(errors);
+        .toList();
+    return new ErrorResponse<>(errors);
   }
 
-  public ErrorResponse handle(HttpRequestMethodNotSupportedException exception,
+  public ErrorResponse<InvalidHttpMethodMeta> handle(HttpRequestMethodNotSupportedException exception,
                               String code) {
-    return ErrorResponse.singleError(new Error(
+    return ErrorResponse.singleError(new Error<>(
         code,
         exception.getMessage(),
         new InvalidHttpMethodMeta(
@@ -131,10 +130,10 @@ public class RestErrorHandlerBase {
     ));
   }
 
-  public ErrorResponse handle(HttpMediaTypeNotSupportedException exception,
+  public ErrorResponse<InvalidContentTypeMeta> handle(HttpMediaTypeNotSupportedException exception,
                               WebRequest webRequest, String code) {
 
-    return ErrorResponse.singleError(new Error(
+    return ErrorResponse.singleError(new Error<>(
             code,
             exception.getMessage(),
             new InvalidContentTypeMeta(
@@ -142,13 +141,14 @@ public class RestErrorHandlerBase {
                 exception.getSupportedMediaTypes()
                     .stream()
                     .map(MimeType::toString)
-                    .collect(Collectors.toList())
+                    .toList()
             )
         )
     );
   }
 
-  protected Error getErrorForInvalidFormat(InvalidFormatException formatException, String code) {
+  protected Error<InvalidRequestBodyMeta> getErrorForInvalidFormat(InvalidFormatException formatException,
+                                                                   String code) {
     var jsonPointer = getJsonPointerField(formatException);
     String detail;
     if (formatException.getTargetType().isEnum()) {
@@ -162,7 +162,7 @@ public class RestErrorHandlerBase {
     } else {
       detail = formatException.getOriginalMessage();
     }
-    return new Error(
+    return new Error<>(
         code,
         detail,
         new InvalidRequestBodyMeta(
