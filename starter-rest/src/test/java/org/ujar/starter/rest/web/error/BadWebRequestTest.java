@@ -13,7 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-public class BadWebRequestTest extends DefaultRestErrorHandlerTestBase {
+class BadWebRequestTest extends DefaultRestErrorHandlerTestBase {
 
   @Test
   @SneakyThrows
