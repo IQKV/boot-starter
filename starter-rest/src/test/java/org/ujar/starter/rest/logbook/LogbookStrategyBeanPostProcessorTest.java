@@ -51,7 +51,6 @@ class LogbookStrategyBeanPostProcessorTest {
     // when
     var resultStrategy = strategyBeanPostProcessor.postProcessBeforeInitialization(defaultStrategy, "strategy");
     // then
-    assertNotEquals(defaultStrategy, resultStrategy);
     assertTrue(resultStrategy instanceof WithoutResponseBodyStrategy);
   }
 }
