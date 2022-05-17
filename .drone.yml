@@ -34,10 +34,6 @@ steps:
         include:
           - feature/*
           - main
-      event:
-        include:
-          - push
-          - pull_request
 
   - name: test starter-kafka
     image: maven:3-openjdk-17-slim
@@ -59,10 +55,6 @@ steps:
         include:
           - feature/*
           - main
-      event:
-        include:
-          - push
-          - pull_request
 
   - name: publish-snapshot-package starter-rest
     image: maven:3-openjdk-17-slim
@@ -81,10 +73,6 @@ steps:
         include:
           - feature/*
           - main
-      event:
-        include:
-          - push
-          - pull_request
 
   - name: publish-release-package starter-rest
     image: maven:3-openjdk-17-slim
@@ -119,10 +107,6 @@ steps:
         include:
           - feature/*
           - main
-      event:
-        include:
-          - push
-          - pull_request
 
   - name: publish-release-package starter-kafka
     image: maven:3-openjdk-17-slim
