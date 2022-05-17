@@ -1,9 +1,11 @@
 package org.ujar.starter.rest.logbook;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.ujar.starter.rest.logbook.LogbookStrategyProperties.CustomLogbookStrategy;
 import org.zalando.logbook.Strategy;
 
+@SuppressFBWarnings("EI_EXPOSE_REP2")
 public class LogbookStrategyBeanPostProcessor implements BeanPostProcessor {
   private final int minimumStatus;
   private final LogbookStrategyProperties logbookStrategyProperties;
