@@ -1,4 +1,4 @@
-package org.ujar.boot.starter.restful;
+package org.ujar.boot.starter.metrics;
 
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConditionalOnBean({ProcessorMetrics.class, PrometheusMeterRegistry.class})
-public class PrometheusConfiguration {
+public class PrometheusConfig {
   @Autowired
   protected void register(ProcessorMetrics processorMetrics, PrometheusMeterRegistry registry) {
     processorMetrics.bindTo(registry);

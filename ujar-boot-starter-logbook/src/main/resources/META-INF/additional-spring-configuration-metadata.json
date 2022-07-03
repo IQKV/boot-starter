@@ -1,0 +1,11 @@
+{
+  "properties": [
+    {
+      "name": "ujar.logbook.custom-strategy",
+      "type": "org.ujar.boot.starter.logbook.LogbookStrategyProperties$CustomLogbookStrategy",
+      "defaultValue": "WITHOUT_RESPONSE_BODY"
+    }
+  ],
+  "groups": [],
+  "hints": []
+}

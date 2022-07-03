@@ -17,6 +17,6 @@ import org.springframework.context.annotation.Import;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import({LogbookBodyFilterConfiguration.class})
+@Import({LogbookBodyFilterConfig.class})
 public @interface LogbookJsonBodyFilter {
 }

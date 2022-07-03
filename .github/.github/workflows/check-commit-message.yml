@@ -1,21 +1,10 @@
 name: 'Commit Message Check'
 
 on:
-  pull_request:
-    types:
-      - opened
-      - edited
-      - reopened
-      - synchronize
-  pull_request_target:
-    types:
-      - opened
-      - edited
-      - reopened
-      - synchronize
   push:
     branches:
       - main
+      - develop
       - 'feature/*'
 
 jobs:
@@ -26,7 +15,7 @@ jobs:
       - name: Check Commit Type
         uses: gsactions/commit-message-checker@v1
         with:
-          pattern: '^(feat|fix|docs|style|refactor|perf|test|chore): \w+'
+          pattern: '^(feat|fix|docs|style|refactor|perf|test|chore): .+'
           flags: 'gm'
           error: 'Your commit title did not follow semantic versioning. Please see https://github.com/ujar-org/ujar-boot-starter/blob/main/SEMANTIC_COMMITS.md'
       - name: Check Line Length
@@ -36,5 +25,5 @@ jobs:
           error: 'The maximum line length of 80 characters is exceeded.'
           excludeDescription: 'true' # optional: this excludes the description body of a pull request
           excludeTitle: 'true' # optional: this excludes the title of a pull request
-          checkAllCommitMessages: 'true' # optional: this checks all commits associated with a pull request
+          checkAllCommitMessages: 'false' # optional: this checks all commits associated with a pull request
           accessToken: ${{ secrets.GITHUB_TOKEN }} # github access token is only required if checkAllCommitMessages is true

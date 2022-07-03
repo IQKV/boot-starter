@@ -1,0 +1,9 @@
+{
+    "properties": [
+        {
+            "name": "ujar.cache",
+            "description": "Cache configuration definitions.",
+            "type": "org.ujar.boot.starter.cache.CacheSectionProperties"
+        }
+    ]
+}
