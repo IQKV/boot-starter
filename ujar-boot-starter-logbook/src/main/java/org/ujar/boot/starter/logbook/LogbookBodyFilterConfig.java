@@ -12,7 +12,7 @@ import org.zalando.logbook.json.CompactingJsonBodyFilter;
 
 @Configuration
 @ConditionalOnClass(Logbook.class)
-class LogbookBodyFilterConfiguration {
+class LogbookBodyFilterConfig {
 
   @Bean
   protected BodyFilter bodyFilter(LogbookProperties properties) {

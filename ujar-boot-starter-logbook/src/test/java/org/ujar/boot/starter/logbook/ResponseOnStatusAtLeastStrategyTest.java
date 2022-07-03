@@ -18,8 +18,10 @@ class ResponseOnStatusAtLeastStrategyTest {
     when(httpResponse.getStatus()).thenReturn(200);
     var httpResponseWithoutBody = mock(HttpResponse.class);
     when(httpResponse.withoutBody()).thenReturn(httpResponseWithoutBody);
+
     // when
     var resultResponse = logbookStrategy.process(mock(HttpRequest.class), httpResponse);
+
     // then
     assertEquals(httpResponseWithoutBody, resultResponse);
   }
@@ -32,8 +34,10 @@ class ResponseOnStatusAtLeastStrategyTest {
     when(httpResponse.getStatus()).thenReturn(400);
     var httpResponseWithBody = mock(HttpResponse.class);
     when(httpResponse.withBody()).thenReturn(httpResponseWithBody);
+
     // when
     var resultResponse = logbookStrategy.process(mock(HttpRequest.class), httpResponse);
+
     // then
     assertEquals(httpResponseWithBody, resultResponse);
   }

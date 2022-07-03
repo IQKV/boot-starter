@@ -5,16 +5,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 
 
 @ExtendWith(SpringExtension.class)
-class BadRequestParamTest extends DefaultRestErrorHandlerTestBase {
+class BadRequestParamTest extends DefaultRestfulErrorHandlerTestBase {
+
+  @Autowired
+  public BadRequestParamTest(MockMvc mockMvc,
+                             ObjectMapper objectMapper) {
+    super(mockMvc, objectMapper);
+  }
 
   @Test
   @SneakyThrows

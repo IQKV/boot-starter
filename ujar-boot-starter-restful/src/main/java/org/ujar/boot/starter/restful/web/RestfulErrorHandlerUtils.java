@@ -6,7 +6,7 @@ import lombok.experimental.UtilityClass;
 import org.springframework.validation.FieldError;
 
 @UtilityClass
-public class RestErrorHandlerUtils {
+public class RestfulErrorHandlerUtils {
 
   /**
    * Transforms {@link org.springframework.validation.FieldError#getField()} path representation

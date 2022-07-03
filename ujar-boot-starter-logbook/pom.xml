@@ -4,7 +4,7 @@
 
     <groupId>org.ujar.boot</groupId>
     <artifactId>ujar-boot-starter-logbook</artifactId>
-    <version>0.7.0-SNAPSHOT</version>
+    <version>0.8.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>ujar-boot-starter-logbook</name>
@@ -39,11 +39,11 @@
     <parent>
         <groupId>org.ujar.parent</groupId>
         <artifactId>ujar-parent-pom</artifactId>
-        <version>0.7.0-SNAPSHOT</version>
+        <version>0.8.0-SNAPSHOT</version>
     </parent>
 
     <properties>
-        <sonar.coverage.exclusions>**/*Test.java,**/Test*.java</sonar.coverage.exclusions>
+        <sonar.coverage.exclusions>**/*Config*.java,**/*Properties.java,**/*Test.java,**/Test*.java</sonar.coverage.exclusions>
     </properties>
 
     <dependencies>
@@ -52,25 +52,17 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
+            <groupId>org.ujar.boot</groupId>
+            <artifactId>ujar-boot-starter-metrics</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.zalando</groupId>
             <artifactId>logbook-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-inline</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
@@ -80,8 +72,17 @@
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-annotations</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
