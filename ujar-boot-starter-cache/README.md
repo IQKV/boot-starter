@@ -1,0 +1,1 @@
+# Starter for caching support

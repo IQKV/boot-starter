@@ -2,12 +2,11 @@ package org.ujar.boot.starter.restful;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.ujar.boot.starter.restful.web.WebConfiguration;
+import org.ujar.boot.starter.restful.web.WebConfig;
 
 @Configuration
 @Import(value = {
-    PrometheusConfiguration.class,
-    WebConfiguration.class,
+    WebConfig.class,
 })
 public class RestfulAutoConfiguration {
 }

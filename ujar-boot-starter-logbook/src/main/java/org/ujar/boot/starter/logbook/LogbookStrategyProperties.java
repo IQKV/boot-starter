@@ -2,7 +2,7 @@ package org.ujar.boot.starter.logbook;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "logbook")
+@ConfigurationProperties(prefix = "ujar.logbook")
 public class LogbookStrategyProperties {
   private CustomLogbookStrategy customStrategy;
 

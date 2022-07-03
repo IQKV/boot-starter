@@ -13,8 +13,52 @@ trigger:
 volumes:
   - name: m2cache
     host:
-      path: /var/cache/m2cache
+      path: /volume1/m2cache
 steps:
+
+  - name: build ujar-boot-starter-metrics
+    image: maven:3-openjdk-17-slim
+    volumes :
+      - name : m2cache
+        path : /root/.m2
+    environment :
+      DEPLOYER_USERNAME :
+        from_secret : DEPLOYER_USERNAME
+      DEPLOYER_PASSWORD :
+        from_secret : DEPLOYER_PASSWORD
+    commands:
+      - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true -B -V --file ujar-boot-starter-metrics/pom.xml -s ujar-boot-starter-metrics/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn pmd:check --file ujar-boot-starter-metrics/pom.xml -B -s ujar-boot-starter-metrics/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn org.jacoco:jacoco-maven-plugin:prepare-agent test --file ujar-boot-starter-metrics/pom.xml -B -s ujar-boot-starter-metrics/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+
+  - name: publish-snapshot-package ujar-boot-starter-metrics
+    image: maven:3-openjdk-17-slim
+    volumes :
+      - name : m2cache
+        path : /root/.m2
+    environment :
+      DEPLOYER_USERNAME :
+        from_secret : DEPLOYER_USERNAME
+      DEPLOYER_PASSWORD :
+        from_secret : DEPLOYER_PASSWORD
+    commands:
+      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-metrics/pom.xml -s ujar-boot-starter-metrics/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+
+
+  - name: publish-release-package ujar-boot-starter-metrics
+    image: maven:3-openjdk-17-slim
+    volumes :
+      - name : m2cache
+        path : /root/.m2
+    environment :
+      DEPLOYER_USERNAME :
+        from_secret : DEPLOYER_USERNAME
+      DEPLOYER_PASSWORD :
+        from_secret : DEPLOYER_PASSWORD
+    commands:
+      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-metrics/pom.xml -s ujar-boot-starter-metrics/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+    when:
+      event: tag
 
   - name: build ujar-boot-starter-restful
     image: maven:3-openjdk-17-slim
@@ -31,7 +75,6 @@ steps:
       SONAR_TOKEN :
         from_secret : SONAR_TOKEN
     commands:
-      - rm -rf /root/.m2/repository/org/ujar/
       - mvn clean compile test-compile -B  --file ujar-boot-starter-restful/pom.xml -s ujar-boot-starter-restful/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn pmd:check -B --file ujar-boot-starter-restful/pom.xml -s ujar-boot-starter-restful/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn com.github.spotbugs:spotbugs-maven-plugin:check -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=true -Dspotbugs.includeTests=true  --file ujar-boot-starter-restful/pom.xml -s ujar-boot-starter-restful/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
@@ -48,7 +91,6 @@ steps:
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands:
-      - rm -rf /root/.m2/repository/org/ujar/
       - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true -B -V --file ujar-boot-starter-kafka/pom.xml -s ujar-boot-starter-kafka/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn pmd:check --file ujar-boot-starter-kafka/pom.xml -B -s ujar-boot-starter-kafka/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn org.jacoco:jacoco-maven-plugin:prepare-agent test --file ujar-boot-starter-kafka/pom.xml -B -s ujar-boot-starter-kafka/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
@@ -64,7 +106,6 @@ steps:
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands:
-      - rm -rf /root/.m2/repository/org/ujar/
       - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true -B -V --file ujar-boot-starter-amqp/pom.xml -s ujar-boot-starter-amqp/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn pmd:check --file ujar-boot-starter-amqp/pom.xml -B -s ujar-boot-starter-amqp/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn org.jacoco:jacoco-maven-plugin:prepare-agent test --file ujar-boot-starter-amqp/pom.xml -B -s ujar-boot-starter-amqp/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
@@ -84,11 +125,25 @@ steps:
       SONAR_TOKEN :
         from_secret : SONAR_TOKEN
     commands:
-      - rm -rf /root/.m2/repository/org/ujar/
       - mvn clean compile test-compile -B  --file ujar-boot-starter-logbook/pom.xml -s ujar-boot-starter-logbook/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn pmd:check -B --file ujar-boot-starter-logbook/pom.xml -s ujar-boot-starter-logbook/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn com.github.spotbugs:spotbugs-maven-plugin:check -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=true -Dspotbugs.includeTests=true  --file ujar-boot-starter-logbook/pom.xml -s ujar-boot-starter-logbook/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package org.jacoco:jacoco-maven-plugin:report sonar:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=ujar-org:ujar-boot-starter-logbook -Dsonar.projectName=ujar-org:ujar-boot-starter-logbook --batch-mode  --file ujar-boot-starter-logbook/pom.xml -s ujar-boot-starter-logbook/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+
+  - name: build ujar-boot-starter-cache
+    image: maven:3-openjdk-17-slim
+    volumes :
+      - name : m2cache
+        path : /root/.m2
+    environment :
+      DEPLOYER_USERNAME :
+        from_secret : DEPLOYER_USERNAME
+      DEPLOYER_PASSWORD :
+        from_secret : DEPLOYER_PASSWORD
+    commands:
+      - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true -B -V --file ujar-boot-starter-cache/pom.xml -s ujar-boot-starter-cache/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn pmd:check --file ujar-boot-starter-cache/pom.xml -B -s ujar-boot-starter-cache/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn org.jacoco:jacoco-maven-plugin:prepare-agent test --file ujar-boot-starter-cache/pom.xml -B -s ujar-boot-starter-cache/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
 
   - name: publish-snapshot-package ujar-boot-starter-restful
     image: maven:3-openjdk-17-slim
@@ -144,6 +199,35 @@ steps:
         from_secret : DEPLOYER_PASSWORD
     commands:
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-kafka/pom.xml -s ujar-boot-starter-kafka/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+    when:
+      event: tag
+
+  - name: publish-snapshot-package ujar-boot-starter-cache
+    image: maven:3-openjdk-17-slim
+    volumes :
+      - name : m2cache
+        path : /root/.m2
+    environment :
+      DEPLOYER_USERNAME :
+        from_secret : DEPLOYER_USERNAME
+      DEPLOYER_PASSWORD :
+        from_secret : DEPLOYER_PASSWORD
+    commands:
+      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-cache/pom.xml -s ujar-boot-starter-cache/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+
+
+  - name: publish-release-package ujar-boot-starter-cache
+    image: maven:3-openjdk-17-slim
+    volumes :
+      - name : m2cache
+        path : /root/.m2
+    environment :
+      DEPLOYER_USERNAME :
+        from_secret : DEPLOYER_USERNAME
+      DEPLOYER_PASSWORD :
+        from_secret : DEPLOYER_PASSWORD
+    commands:
+      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-cache/pom.xml -s ujar-boot-starter-cache/settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
     when:
       event: tag
 
