@@ -14,13 +14,15 @@ class LogbookBodyFilterConfigurationTest {
   @Test
   void shouldCreateCompactingJsonBodyFilterIfMaxBodySizeNotConfigured() {
     // given
-    var logbookBodyFilterConfiguration = new LogbookBodyFilterConfiguration();
+    var logbookBodyFilterConfig = new LogbookBodyFilterConfig();
     var logbookProperties = mock(LogbookProperties.class);
     var logbookWriteProperties = mock(LogbookProperties.Write.class);
     when(logbookProperties.getWrite()).thenReturn(logbookWriteProperties);
     when(logbookWriteProperties.getMaxBodySize()).thenReturn(-1);
+
     // when
-    var bodyFilter = logbookBodyFilterConfiguration.bodyFilter(logbookProperties);
+    var bodyFilter = logbookBodyFilterConfig.bodyFilter(logbookProperties);
+
     // then
     assertTrue(bodyFilter instanceof CompactingJsonBodyFilter);
   }
@@ -28,13 +30,15 @@ class LogbookBodyFilterConfigurationTest {
   @Test
   void shouldMergeCompactingJsonBodyFilterWithTruncateIfMaxBodySizeConfigured() {
     // given
-    var logbookBodyFilterConfiguration = new LogbookBodyFilterConfiguration();
+    var logbookBodyFilterConfig = new LogbookBodyFilterConfig();
     var logbookProperties = mock(LogbookProperties.class);
     var logbookWriteProperties = mock(LogbookProperties.Write.class);
     when(logbookProperties.getWrite()).thenReturn(logbookWriteProperties);
     when(logbookWriteProperties.getMaxBodySize()).thenReturn(1000);
+
     // when
-    var bodyFilter = logbookBodyFilterConfiguration.bodyFilter(logbookProperties);
+    var bodyFilter = logbookBodyFilterConfig.bodyFilter(logbookProperties);
+
     // then
     assertFalse(bodyFilter instanceof CompactingJsonBodyFilter);
   }

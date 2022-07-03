@@ -24,8 +24,10 @@ class WithoutResponseBodyStrategyTest {
     var httpRequest = mock(HttpRequest.class);
     var httpResponse = mock(HttpResponse.class);
     when(httpResponse.getStatus()).thenReturn(500);
+
     // when
     logbookStrategy.write(mock(Correlation.class), httpRequest, httpResponse, sink);
+
     // then
     verify(sink).writeBoth(any(), eq(httpRequest), eq(httpResponse));
     verifyNoMoreInteractions(sink);
@@ -41,8 +43,10 @@ class WithoutResponseBodyStrategyTest {
     when(httpResponse.getStatus()).thenReturn(200);
     var httpRequestWithoutBody = mock(HttpRequest.class);
     when(httpRequest.withoutBody()).thenReturn(httpRequestWithoutBody);
+
     // when
     logbookStrategy.write(mock(Correlation.class), httpRequest, httpResponse, sink);
+
     // then
     verify(httpRequest).withoutBody();
     verify(sink).writeBoth(any(), eq(httpRequestWithoutBody), eq(httpResponse));
@@ -55,8 +59,10 @@ class WithoutResponseBodyStrategyTest {
     var httpResponse = mock(HttpResponse.class);
     var httpResponseWithoutBody = mock(HttpResponse.class);
     when(httpResponse.withoutBody()).thenReturn(httpResponseWithoutBody);
+
     // when
     var resultResponse = new WithoutResponseBodyStrategy(0).process(mock(HttpRequest.class), httpResponse);
+
     // then
     assertEquals(httpResponseWithoutBody, resultResponse);
     verify(httpResponse).withoutBody();

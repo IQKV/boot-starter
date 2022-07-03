@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import(value = {
-    LogbookConfiguration.class
+    LogbookConfig.class
 })
 public class LogbookAutoConfiguration {
 }

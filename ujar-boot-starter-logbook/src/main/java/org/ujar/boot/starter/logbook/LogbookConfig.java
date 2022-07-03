@@ -11,7 +11,7 @@ import org.zalando.logbook.Logbook;
 @Configuration
 @ConditionalOnClass(Logbook.class)
 @EnableConfigurationProperties(LogbookStrategyProperties.class)
-public class LogbookConfiguration {
+public class LogbookConfig {
   @Bean
   @ConditionalOnProperty(name = "logbook.custom-strategy")
   protected LogbookStrategyBeanPostProcessor logbookStrategyBeanPostProcessor(

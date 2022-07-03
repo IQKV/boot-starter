@@ -6,14 +6,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith(SpringExtension.class)
-class BadWebRequestTest extends DefaultRestErrorHandlerTestBase {
+class BadWebRequestTest extends DefaultRestfulErrorHandlerTestBase {
+
+  @Autowired
+  public BadWebRequestTest(MockMvc mockMvc,
+                           ObjectMapper objectMapper) {
+    super(mockMvc, objectMapper);
+  }
 
   @Test
   @SneakyThrows

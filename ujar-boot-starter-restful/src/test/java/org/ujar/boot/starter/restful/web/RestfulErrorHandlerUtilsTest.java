@@ -13,7 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.validation.FieldError;
 
-class RestErrorHandlerUtilsTest {
+class RestfulErrorHandlerUtilsTest {
 
   @ParameterizedTest
   @CsvSource({
@@ -24,7 +24,7 @@ class RestErrorHandlerUtilsTest {
       "root[1].child1[2].child3[3][4][5][6].child4,/root/1/child1/2/child3/3/4/5/6/child4"
   })
   void shouldParseToJsonPath(String input, String expected) {
-    var actual = RestErrorHandlerUtils.getJsonPointerField(new FieldError("", input, ""));
+    var actual = RestfulErrorHandlerUtils.getJsonPointerField(new FieldError("", input, ""));
 
     assertEquals(expected, actual);
   }
@@ -41,7 +41,7 @@ class RestErrorHandlerUtilsTest {
         )
     );
 
-    var actual = RestErrorHandlerUtils.getJsonPointerField(exception);
+    var actual = RestfulErrorHandlerUtils.getJsonPointerField(exception);
 
     assertEquals("/fieldName/0/anotherField/100", actual);
   }

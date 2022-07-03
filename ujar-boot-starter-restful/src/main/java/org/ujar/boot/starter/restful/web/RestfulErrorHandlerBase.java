@@ -1,6 +1,6 @@
 package org.ujar.boot.starter.restful.web;
 
-import static org.ujar.boot.starter.restful.web.RestErrorHandlerUtils.getJsonPointerField;
+import static org.ujar.boot.starter.restful.web.RestfulErrorHandlerUtils.getJsonPointerField;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import java.util.List;
@@ -27,14 +27,14 @@ import org.ujar.boot.starter.restful.web.dto.InvalidRequestBodyMeta;
 import org.ujar.boot.starter.restful.web.dto.InvalidRequestParameterMeta;
 import org.ujar.boot.starter.restful.web.dto.UnknownErrorMeta;
 
-public class RestErrorHandlerBase {
+public class RestfulErrorHandlerBase {
 
   public ErrorResponse<UnknownErrorMeta> handle(Exception exception, String code) {
-    return ErrorResponse.singleError(new Error<>(
+    return new ErrorResponse<>(List.of(new Error<>(
         code,
         exception.getMessage(),
         UnknownErrorMeta.fromException(exception)
-    ));
+    )));
   }
 
   public ErrorResponse<InvalidRequestBodyMeta> handle(MethodArgumentNotValidException exception, String code) {
@@ -50,48 +50,48 @@ public class RestErrorHandlerBase {
     return new ErrorResponse<>(errors);
   }
 
-  public ErrorResponse handle(HttpMessageNotReadableException exception, String code) {
-    Error error;
-    if (exception.getCause() instanceof InvalidFormatException) {
-      var formatException = (InvalidFormatException) exception.getCause();
+  public ErrorResponse<InvalidRequestBodyMeta> handle(HttpMessageNotReadableException exception, String code) {
+    Error<InvalidRequestBodyMeta> error;
+    if (exception.getCause() instanceof InvalidFormatException formatException) {
       error = getErrorForInvalidFormat(formatException, code);
     } else {
-      error = Error.of(
+      error = new Error<>(
           code,
-          exception.getMessage()
+          exception.getMessage(),
+          new InvalidRequestBodyMeta(null, null)
       );
     }
-    return ErrorResponse.singleError(error);
+    return new ErrorResponse<>(List.of(error));
   }
 
   public ErrorResponse<InvalidRequestParameterMeta> handle(MissingServletRequestParameterException exception,
-                              String code) {
-    return ErrorResponse.singleError(new Error<>(
+                                                           String code) {
+    return new ErrorResponse<>(List.of(new Error<>(
         code,
         exception.getMessage(),
         new InvalidRequestParameterMeta(exception.getParameterName(), null)
-    ));
+    )));
   }
 
   public ErrorResponse<InvalidRequestParameterMeta> handle(TypeMismatchException exception, String code) {
-    return ErrorResponse.singleError(new Error<>(
+    return new ErrorResponse<>(List.of(new Error<>(
         code,
         exception.getMessage(),
         new InvalidRequestParameterMeta(
             exception.getPropertyName(),
             Objects.requireNonNullElse(exception.getValue(), "").toString()
-        )));
+        ))));
   }
 
   public ErrorResponse<InvalidRequestParameterMeta> handle(MethodArgumentTypeMismatchException exception,
-                              String code) {
-    return ErrorResponse.singleError(new Error<>(
+                                                           String code) {
+    return new ErrorResponse<>(List.of(new Error<>(
         code,
         exception.getMessage(),
         new InvalidRequestParameterMeta(
             exception.getName(),
             Objects.requireNonNullElse(exception.getValue(), "").toString()
-        )));
+        ))));
   }
 
   public ErrorResponse<InvalidRequestParameterMeta> handle(ConstraintViolationException exception, String code) {
@@ -119,31 +119,31 @@ public class RestErrorHandlerBase {
   }
 
   public ErrorResponse<InvalidHttpMethodMeta> handle(HttpRequestMethodNotSupportedException exception,
-                              String code) {
-    return ErrorResponse.singleError(new Error<>(
+                                                     String code) {
+    return new ErrorResponse<>(List.of(new Error<>(
         code,
         exception.getMessage(),
         new InvalidHttpMethodMeta(
             exception.getMethod(),
             List.of(Objects.requireNonNullElseGet(exception.getSupportedMethods(), () -> new String[0]))
         )
-    ));
+    )));
   }
 
   public ErrorResponse<InvalidContentTypeMeta> handle(HttpMediaTypeNotSupportedException exception,
-                              WebRequest webRequest, String code) {
+                                                      WebRequest webRequest, String code) {
 
-    return ErrorResponse.singleError(new Error<>(
-            code,
-            exception.getMessage(),
-            new InvalidContentTypeMeta(
-                webRequest.getHeader(HttpHeaders.CONTENT_TYPE),
-                exception.getSupportedMediaTypes()
-                    .stream()
-                    .map(MimeType::toString)
-                    .toList()
-            )
+    return new ErrorResponse<>(List.of(new Error<>(
+        code,
+        exception.getMessage(),
+        new InvalidContentTypeMeta(
+            webRequest.getHeader(HttpHeaders.CONTENT_TYPE),
+            exception.getSupportedMediaTypes()
+                .stream()
+                .map(MimeType::toString)
+                .toList()
         )
+    ))
     );
   }
 

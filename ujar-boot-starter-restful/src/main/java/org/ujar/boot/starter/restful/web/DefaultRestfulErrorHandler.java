@@ -19,72 +19,85 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.ujar.boot.starter.restful.web.dto.ErrorCode;
 import org.ujar.boot.starter.restful.web.dto.ErrorResponse;
+import org.ujar.boot.starter.restful.web.dto.InvalidContentTypeMeta;
+import org.ujar.boot.starter.restful.web.dto.InvalidHttpMethodMeta;
+import org.ujar.boot.starter.restful.web.dto.InvalidRequestBodyMeta;
+import org.ujar.boot.starter.restful.web.dto.InvalidRequestParameterMeta;
+import org.ujar.boot.starter.restful.web.dto.UnknownErrorMeta;
 
 @Slf4j
 @RestControllerAdvice
 @ConditionalOnMissingBean(ResponseEntityExceptionHandler.class)
-public class DefaultRestErrorHandler extends RestErrorHandlerBase {
+public class DefaultRestfulErrorHandler extends RestfulErrorHandlerBase {
 
   @ExceptionHandler
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public ErrorResponse handleCommonExceptionHandler(Exception exception) {
+  public ErrorResponse<UnknownErrorMeta> handleCommonExceptionHandler(Exception exception) {
     log.error("Exception during call", exception);
     return this.handle(exception, ErrorCode.UNKNOWN_ERROR);
   }
 
   @ExceptionHandler
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorResponse handleMethodArgumentNotValid(MethodArgumentNotValidException exception) {
+  public ErrorResponse<InvalidRequestBodyMeta> handleMethodArgumentNotValid(
+      MethodArgumentNotValidException exception) {
     log.info("Method argument is not valid", exception);
     return this.handle(exception, ErrorCode.REQUEST_BODY_INVALID);
   }
 
   @ExceptionHandler
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorResponse handleHttpMessageNotReadable(@Nonnull HttpMessageNotReadableException exception) {
+  public ErrorResponse<InvalidRequestBodyMeta> handleHttpMessageNotReadable(
+      @Nonnull HttpMessageNotReadableException exception) {
     log.info("HTTP message is not readable", exception);
     return this.handle(exception, ErrorCode.REQUEST_BODY_INVALID);
   }
 
   @ExceptionHandler
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorResponse handleMissingServletRequestParameter(MissingServletRequestParameterException exception) {
+  public ErrorResponse<InvalidRequestParameterMeta> handleMissingServletRequestParameter(
+      MissingServletRequestParameterException exception) {
     log.info("Missing request parameter", exception);
     return this.handle(exception, ErrorCode.REQUEST_PARAMETER_INVALID);
   }
 
   @ExceptionHandler
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorResponse handleTypeMismatch(TypeMismatchException exception) {
+  public ErrorResponse<InvalidRequestParameterMeta> handleTypeMismatch(
+      TypeMismatchException exception) {
     log.info("Type mismatch exception", exception);
     return this.handle(exception, ErrorCode.REQUEST_PARAMETER_INVALID);
   }
 
   @ExceptionHandler
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorResponse handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception) {
+  public ErrorResponse<InvalidRequestParameterMeta> handleMethodArgumentTypeMismatchException(
+      MethodArgumentTypeMismatchException exception) {
     log.info("Method argument type mismatch exception", exception);
     return this.handle(exception, ErrorCode.REQUEST_PARAMETER_INVALID);
   }
 
   @ExceptionHandler
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorResponse handleConstraintViolationException(ConstraintViolationException exception) {
+  public ErrorResponse<InvalidRequestParameterMeta> handleConstraintViolationException(
+      ConstraintViolationException exception) {
     log.info("Constraint violation", exception);
     return this.handle(exception, ErrorCode.REQUEST_PARAMETER_INVALID);
   }
 
   @ExceptionHandler
   @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-  public ErrorResponse handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException exception) {
+  public ErrorResponse<InvalidHttpMethodMeta> handleHttpRequestMethodNotSupported(
+      HttpRequestMethodNotSupportedException exception) {
     log.info("Method not supported", exception);
     return this.handle(exception, ErrorCode.INVALID_HTTP_METHOD);
   }
 
   @ExceptionHandler
   @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-  public ErrorResponse handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException exception,
-                                                       WebRequest webRequest) {
+  public ErrorResponse<InvalidContentTypeMeta> handleHttpMediaTypeNotSupported(
+      HttpMediaTypeNotSupportedException exception,
+      WebRequest webRequest) {
     log.info("Media type not supported", exception);
     return this.handle(exception, webRequest, ErrorCode.INVALID_REQUEST_CONTENT_TYPE);
   }

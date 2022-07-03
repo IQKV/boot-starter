@@ -21,8 +21,10 @@ class LogbookStrategyBeanPostProcessorTest {
     var strategyProperties = mock(LogbookStrategyProperties.class);
     var strategyBeanPostProcessor = new LogbookStrategyBeanPostProcessor(0, strategyProperties);
     var bodyFilter = mock(BodyFilter.class);
+
     // when
     var resultBean = strategyBeanPostProcessor.postProcessBeforeInitialization(bodyFilter, "testName");
+
     // then
     assertEquals(bodyFilter, resultBean);
   }
@@ -34,8 +36,10 @@ class LogbookStrategyBeanPostProcessorTest {
     when(strategyProperties.getCustomStrategy()).thenReturn(CustomLogbookStrategy.RESPONSE_ON_STATUS_AT_LEAST);
     var strategyBeanPostProcessor = new LogbookStrategyBeanPostProcessor(0, strategyProperties);
     var defaultStrategy = new DefaultStrategy();
+
     // when
     var resultStrategy = strategyBeanPostProcessor.postProcessBeforeInitialization(defaultStrategy, "strategy");
+
     // then
     assertNotEquals(defaultStrategy, resultStrategy);
     assertTrue(resultStrategy instanceof ResponseOnStatusAtLeastStrategy);
@@ -48,8 +52,10 @@ class LogbookStrategyBeanPostProcessorTest {
     when(strategyProperties.getCustomStrategy()).thenReturn(CustomLogbookStrategy.WITHOUT_RESPONSE_BODY);
     var strategyBeanPostProcessor = new LogbookStrategyBeanPostProcessor(0, strategyProperties);
     var defaultStrategy = mock(Strategy.class);
+
     // when
     var resultStrategy = strategyBeanPostProcessor.postProcessBeforeInitialization(defaultStrategy, "strategy");
+
     // then
     assertTrue(resultStrategy instanceof WithoutResponseBodyStrategy);
   }
