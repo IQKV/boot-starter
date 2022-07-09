@@ -3,7 +3,7 @@ package org.ujar.boot.starter.cache;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "ujar.cache", ignoreUnknownFields = false)
-public class CacheSectionProperties {
+public class CacheProperties {
   Ehcache ehcache = new Ehcache();
 
   public Ehcache getEhcache() {
