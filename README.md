@@ -10,7 +10,7 @@
 
 ## Code conventions
 
-The code follows [Google Code Conventions](https://google.github.io/styleguide/javaguide.html) without exceptions. Code quality is measured by:
+The code follows [Google Code Conventions](https://google.github.io/styleguide/javaguide.html). Code quality is measured by:
 - [Sonarqube](https://sonarqube.ujar.org/dashboard?id=ujar-org%3Aujar-boot-starter-restful)
 - [PMD](https://pmd.github.io/)
 - [CheckStyle](https://checkstyle.sourceforge.io/)
