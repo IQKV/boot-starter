@@ -23,7 +23,7 @@ public class TestController {
 
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @PostMapping(value = "/request-body", consumes = MediaType.APPLICATION_JSON_VALUE)
-  void testRequestBody(@Valid @RequestBody @NotNull RequestDto request) {
+  void testRequestBody(@Valid @RequestBody @NotNull final RequestDto request) {
   }
 
   @ResponseStatus(HttpStatus.NO_CONTENT)
