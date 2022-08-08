@@ -12,4 +12,15 @@ public record ProjectInfoProperties(@NotNull String version,
                                     @NotNull String description,
                                     @NotNull String relativePath) {
 
+  public String getVersion() {
+    return version();
+  }
+
+  public String getDescription() {
+    return description();
+  }
+
+  public String getRelativePath() {
+    return relativePath();
+  }
 }
