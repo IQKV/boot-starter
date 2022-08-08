@@ -12,7 +12,7 @@ import org.ujar.boot.starter.kafka.config.topic.TopicDefinition;
 @ConfigurationProperties(prefix = "ujar.kafka")
 @Validated
 @SuppressFBWarnings({"EI_EXPOSE_REP", "EI_EXPOSE_REP2"})
-public record KafkaTopicDefinitionProperties (@NonNull Map<String, TopicDefinition> topics) {
+public record KafkaTopicDefinitionProperties(@NonNull Map<String, TopicDefinition> topics) {
 
   public Map<String, TopicDefinition> getTopics() {
     return topics();
