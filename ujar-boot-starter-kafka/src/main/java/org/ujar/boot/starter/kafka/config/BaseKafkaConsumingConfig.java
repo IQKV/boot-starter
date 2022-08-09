@@ -27,7 +27,7 @@ public abstract class BaseKafkaConsumingConfig implements KafkaListenerConfigure
 
 
   protected <V> ConsumerFactory<String, V> consumerFactory(Class<V> valueClass, KafkaProperties kafkaProperties) {
-    var consumerProperties = kafkaProperties.getConsumer().buildProperties();
+    final var consumerProperties = kafkaProperties.getConsumer().buildProperties();
     try (var serde = new JsonSerde<>(valueClass, new ObjectMapper())) {
       return new DefaultKafkaConsumerFactory<>(consumerProperties,
           new ErrorHandlingDeserializer<>(new StringDeserializer()), new ErrorHandlingDeserializer<>(
@@ -53,20 +53,20 @@ public abstract class BaseKafkaConsumingConfig implements KafkaListenerConfigure
       KafkaOperations<Object, Object> operations,
       KafkaErrorHandlingProperties properties) {
     // Publish to dead letter topic any messages dropped after retries with back off
-    var recoverer = new DeadLetterPublishingRecoverer(operations,
+    final var recoverer = new DeadLetterPublishingRecoverer(operations,
         // Always send to first/only partition of DLT suffixed topic
         (cr, e) -> new TopicPartition(cr.topic() + properties.deadLetter().suffix(), 0));
 
     // Spread out attempts over time, taking a little longer between each attempt
     // Set a max for retries below max.poll.interval.ms; default: 5m, as otherwise we trigger a consumer rebalance
     Backoff backoff = properties.backoff();
-    var exponentialBackOff = new ExponentialBackOffWithMaxRetries(backoff.maxRetries());
+    final var exponentialBackOff = new ExponentialBackOffWithMaxRetries(backoff.maxRetries());
     exponentialBackOff.setInitialInterval(backoff.initialInterval().toMillis());
     exponentialBackOff.setMultiplier(backoff.multiplier());
     exponentialBackOff.setMaxInterval(backoff.maxInterval().toMillis());
 
     // Do not try to recover from validation exceptions when validation of orders failed
-    var errorHandler = new DefaultErrorHandler(recoverer, exponentialBackOff);
+    final var errorHandler = new DefaultErrorHandler(recoverer, exponentialBackOff);
     errorHandler.addNotRetryableExceptions(javax.validation.ValidationException.class);
     errorHandler.addNotRetryableExceptions(ConsumerRecordProcessingException.class);
     return errorHandler;
