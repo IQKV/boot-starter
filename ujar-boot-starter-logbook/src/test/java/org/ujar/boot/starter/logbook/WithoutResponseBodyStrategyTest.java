@@ -19,10 +19,10 @@ class WithoutResponseBodyStrategyTest {
   @Test
   void shouldWriteRequestWithoutBodyIfStatusNotInList() throws IOException {
     // given
-    var logbookStrategy = new WithoutResponseBodyStrategy(400);
-    var sink = mock(Sink.class);
-    var httpRequest = mock(HttpRequest.class);
-    var httpResponse = mock(HttpResponse.class);
+    final var logbookStrategy = new WithoutResponseBodyStrategy(400);
+    final var sink = mock(Sink.class);
+    final var httpRequest = mock(HttpRequest.class);
+    final var httpResponse = mock(HttpResponse.class);
     when(httpResponse.getStatus()).thenReturn(500);
 
     // when
@@ -36,12 +36,12 @@ class WithoutResponseBodyStrategyTest {
   @Test
   void shouldWriteRequestWithoutBodyIfStatusInList() throws IOException {
     // given
-    var logbookStrategy = new WithoutResponseBodyStrategy(400);
-    var sink = mock(Sink.class);
-    var httpRequest = mock(HttpRequest.class);
-    var httpResponse = mock(HttpResponse.class);
+    final var logbookStrategy = new WithoutResponseBodyStrategy(400);
+    final var sink = mock(Sink.class);
+    final var httpRequest = mock(HttpRequest.class);
+    final var httpResponse = mock(HttpResponse.class);
     when(httpResponse.getStatus()).thenReturn(200);
-    var httpRequestWithoutBody = mock(HttpRequest.class);
+    final var httpRequestWithoutBody = mock(HttpRequest.class);
     when(httpRequest.withoutBody()).thenReturn(httpRequestWithoutBody);
 
     // when
@@ -56,12 +56,12 @@ class WithoutResponseBodyStrategyTest {
   @Test
   void shouldMakeResponseWithoutBody() {
     // given
-    var httpResponse = mock(HttpResponse.class);
-    var httpResponseWithoutBody = mock(HttpResponse.class);
+    final var httpResponse = mock(HttpResponse.class);
+    final var httpResponseWithoutBody = mock(HttpResponse.class);
     when(httpResponse.withoutBody()).thenReturn(httpResponseWithoutBody);
 
     // when
-    var resultResponse = new WithoutResponseBodyStrategy(0).process(mock(HttpRequest.class), httpResponse);
+    final var resultResponse = new WithoutResponseBodyStrategy(0).process(mock(HttpRequest.class), httpResponse);
 
     // then
     assertEquals(httpResponseWithoutBody, resultResponse);

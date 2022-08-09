@@ -13,14 +13,14 @@ class ResponseOnStatusAtLeastStrategyTest {
   @Test
   void shouldWriteResponseWithoutBodyIfStatusLessThanMinimum() throws IOException {
     // given
-    var logbookStrategy = new ResponseOnStatusAtLeastStrategy(400);
-    var httpResponse = mock(HttpResponse.class);
+    final var logbookStrategy = new ResponseOnStatusAtLeastStrategy(400);
+    final var httpResponse = mock(HttpResponse.class);
     when(httpResponse.getStatus()).thenReturn(200);
-    var httpResponseWithoutBody = mock(HttpResponse.class);
+    final var httpResponseWithoutBody = mock(HttpResponse.class);
     when(httpResponse.withoutBody()).thenReturn(httpResponseWithoutBody);
 
     // when
-    var resultResponse = logbookStrategy.process(mock(HttpRequest.class), httpResponse);
+    final var resultResponse = logbookStrategy.process(mock(HttpRequest.class), httpResponse);
 
     // then
     assertEquals(httpResponseWithoutBody, resultResponse);
@@ -29,14 +29,14 @@ class ResponseOnStatusAtLeastStrategyTest {
   @Test
   void shouldWriteResponseWithBodyIfStatusMoreThanMinimum() throws IOException {
     // given
-    var logbookStrategy = new ResponseOnStatusAtLeastStrategy(200);
-    var httpResponse = mock(HttpResponse.class);
+    final var logbookStrategy = new ResponseOnStatusAtLeastStrategy(200);
+    final var httpResponse = mock(HttpResponse.class);
     when(httpResponse.getStatus()).thenReturn(400);
-    var httpResponseWithBody = mock(HttpResponse.class);
+    final var httpResponseWithBody = mock(HttpResponse.class);
     when(httpResponse.withBody()).thenReturn(httpResponseWithBody);
 
     // when
-    var resultResponse = logbookStrategy.process(mock(HttpRequest.class), httpResponse);
+    final var resultResponse = logbookStrategy.process(mock(HttpRequest.class), httpResponse);
 
     // then
     assertEquals(httpResponseWithBody, resultResponse);

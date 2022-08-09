@@ -38,9 +38,9 @@ public class RestfulErrorHandlerBase {
   }
 
   public ErrorResponse<InvalidRequestBodyMeta> handle(MethodArgumentNotValidException exception, String code) {
-    var errors = exception.getBindingResult().getFieldErrors().stream()
+    final var errors = exception.getBindingResult().getFieldErrors().stream()
         .map(error -> {
-          var jsonPointer = getJsonPointerField(error);
+          final var jsonPointer = getJsonPointerField(error);
           return new Error<>(
               code,
               jsonPointer + " " + error.getDefaultMessage(),
@@ -95,9 +95,9 @@ public class RestfulErrorHandlerBase {
   }
 
   public ErrorResponse<InvalidRequestParameterMeta> handle(ConstraintViolationException exception, String code) {
-    var errors = exception.getConstraintViolations().stream()
+    final var errors = exception.getConstraintViolations().stream()
         .map(constraintViolation -> {
-              var parameter = StreamSupport
+              final var parameter = StreamSupport
                   .stream(constraintViolation.getPropertyPath().spliterator(), false)
                   .toList()
                   // Path has the following structure: Method name -> Parameter name.
@@ -149,10 +149,10 @@ public class RestfulErrorHandlerBase {
 
   protected Error<InvalidRequestBodyMeta> getErrorForInvalidFormat(InvalidFormatException formatException,
                                                                    String code) {
-    var jsonPointer = getJsonPointerField(formatException);
+    final var jsonPointer = getJsonPointerField(formatException);
     String detail;
     if (formatException.getTargetType().isEnum()) {
-      var allowedValues = Stream.of(formatException.getTargetType().getEnumConstants())
+      final var allowedValues = Stream.of(formatException.getTargetType().getEnumConstants())
           .map(Object::toString)
           .collect(Collectors.joining(","));
 
