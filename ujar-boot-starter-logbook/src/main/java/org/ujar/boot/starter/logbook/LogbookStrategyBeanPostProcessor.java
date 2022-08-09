@@ -19,7 +19,7 @@ public class LogbookStrategyBeanPostProcessor implements BeanPostProcessor {
   @Override
   public Object postProcessBeforeInitialization(Object bean, String beanName) {
     if (bean instanceof Strategy) {
-      var customStrategy = logbookStrategyProperties.getCustomStrategy();
+      final var customStrategy = logbookStrategyProperties.getCustomStrategy();
       if (customStrategy == CustomLogbookStrategy.RESPONSE_ON_STATUS_AT_LEAST) {
         return new ResponseOnStatusAtLeastStrategy(minimumStatus);
       } else if (customStrategy == CustomLogbookStrategy.WITHOUT_RESPONSE_BODY) {

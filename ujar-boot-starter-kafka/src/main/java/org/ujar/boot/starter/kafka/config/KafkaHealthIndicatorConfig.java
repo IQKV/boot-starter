@@ -28,7 +28,7 @@ public class KafkaHealthIndicatorConfig {
 
   @Bean
   public HealthIndicator kafkaHealthIndicator(KafkaHealthIndicatorProperties properties) {
-    var describeClusterOptions = new DescribeClusterOptions().timeoutMs(properties.getResponseTimeout());
+    final var describeClusterOptions = new DescribeClusterOptions().timeoutMs(properties.getResponseTimeout());
     return new HealthIndicator() {
 
       private final AdminClient adminClient = AdminClient.create(admin.getConfigurationProperties());

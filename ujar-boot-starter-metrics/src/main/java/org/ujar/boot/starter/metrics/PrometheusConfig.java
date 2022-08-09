@@ -20,7 +20,7 @@ public class PrometheusConfig {
     if (metricsProperties == null) {
       return;
     }
-    var percentiles = metricsProperties.getDistribution().getPercentiles();
+    final var percentiles = metricsProperties.getDistribution().getPercentiles();
     if (!percentiles.containsKey("http.server.requests")) {
       percentiles.put("http.server.requests", new double[] {0.75, 0.95, 0.99});
     }

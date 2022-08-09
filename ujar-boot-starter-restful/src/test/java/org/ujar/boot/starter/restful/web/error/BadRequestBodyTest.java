@@ -46,7 +46,7 @@ class BadRequestBodyTest extends DefaultRestfulErrorHandlerTestBase {
   @CsvSource(value = {"-15,/numberField must be greater than or equal to 10",
       "1000,/numberField must be less than or equal to 100"})
   void maxAndMinNumber(int number, String errorMessage) {
-    var request = createValidRequest();
+    final var request = createValidRequest();
     request.setNumberField(number);
 
     doRequestAndVerifyBody(
@@ -96,10 +96,10 @@ class BadRequestBodyTest extends DefaultRestfulErrorHandlerTestBase {
   @ParameterizedTest
   @ValueSource(strings = {"1,2,3,4", "1"})
   void listSize(String values) {
-    var request = createValidRequest();
+    final var request = createValidRequest();
     request.setStringListField(List.of(values.split(",")));
 
-    var invalidValue = request.getStringListField()
+    final var invalidValue = request.getStringListField()
         .stream()
         .map(str -> "\"" + str + "\"")
         .collect(Collectors.joining(","));
@@ -121,7 +121,7 @@ class BadRequestBodyTest extends DefaultRestfulErrorHandlerTestBase {
 
   @Test
   void nonNullListElement() {
-    var request = createValidRequest();
+    final var request = createValidRequest();
     request.setStringListField(Arrays.asList("1", null, "2"));
 
     doRequestAndVerifyBody(
@@ -142,7 +142,7 @@ class BadRequestBodyTest extends DefaultRestfulErrorHandlerTestBase {
 
   @Test
   void nestedObjectInvalidValue() {
-    var request = createValidRequest();
+    final var request = createValidRequest();
     request.getNestedObjectField().setStringField("");
 
     doRequestAndVerifyBody(
@@ -163,7 +163,7 @@ class BadRequestBodyTest extends DefaultRestfulErrorHandlerTestBase {
 
   @Test
   void nestedListInvalidValue() {
-    var request = createValidRequest();
+    final var request = createValidRequest();
     request.getNestedObjectListField().get(1).setStringField("");
 
     doRequestAndVerifyBody(
@@ -184,7 +184,7 @@ class BadRequestBodyTest extends DefaultRestfulErrorHandlerTestBase {
 
   @Test
   void stringNotBlank() {
-    var request = createValidRequest();
+    final var request = createValidRequest();
     request.setStringField("");
 
     doRequestAndVerifyBody(
@@ -252,7 +252,7 @@ class BadRequestBodyTest extends DefaultRestfulErrorHandlerTestBase {
 
   @Test
   void fieldNonNull() {
-    var request = createValidRequest();
+    final var request = createValidRequest();
     request.setNestedObjectField(null);
 
     doRequestAndVerifyBody(
