@@ -27,9 +27,9 @@ public class KafkaStreamsHealthIndicatorConfig {
   @Bean
   public HealthIndicator kafkaStreamsHealthIndicator() {
     return () -> {
-      var kafkaStreams = streamsBuilderFactoryBean.getKafkaStreams();
+      final var kafkaStreams = streamsBuilderFactoryBean.getKafkaStreams();
       assert kafkaStreams != null;
-      var kafkaStreamsState = kafkaStreams.state();
+      final var kafkaStreamsState = kafkaStreams.state();
       if (kafkaStreamsState == KafkaStreams.State.CREATED || kafkaStreamsState.isRunningOrRebalancing()) {
         return Health.up()
             .withDetail("state", kafkaStreamsState.name())

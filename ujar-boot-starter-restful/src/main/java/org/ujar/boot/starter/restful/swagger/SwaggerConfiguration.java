@@ -29,13 +29,13 @@ public class SwaggerConfiguration {
         @Value("${spring.application.name}") String applicationName,
         ProjectInfoProperties projectInfoProperties
     ) {
-      var api = new OpenAPI().info(
+      final var api = new OpenAPI().info(
           new Info()
               .title(applicationName)
               .version(projectInfoProperties.getVersion())
               .description(projectInfoProperties.getDescription())
       );
-      var server = new Server();
+      final var server = new Server();
       log.info("Project info properties: {}", projectInfoProperties);
       server.setUrl(requireNonNullElse(projectInfoProperties.getRelativePath(), ""));
       api.setServers(List.of(server));
