@@ -29,16 +29,16 @@ public class TestController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @GetMapping(value = "/request-param")
   void testRequestParam(
-      @RequestParam @Size(max = 10) String stringParam,
-      @RequestParam(name = "integerParam") @Max(1000) @Min(0) int intParam
+      @RequestParam @Size(max = 10) final String stringParam,
+      @RequestParam(name = "integerParam") @Max(1000) @Min(0) final int intParam
   ) {
   }
 
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @DeleteMapping(value = "/path-variable/{number}/{enum}")
   void testPathVariable(
-      @PathVariable(name = "number") int numberVariable,
-      @PathVariable(name = "enum") StatusType enumPathVariable
+      @PathVariable(name = "number") final int numberVariable,
+      @PathVariable(name = "enum") final StatusType enumPathVariable
   ) {
   }
 
