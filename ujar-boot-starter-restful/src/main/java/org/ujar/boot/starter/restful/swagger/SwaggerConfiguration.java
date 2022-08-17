@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.ujar.boot.starter.restful.ProjectInfoProperties;
+import org.ujar.boot.starter.restful.ProgramBuildInfoProperties;
 
 @Configuration
 @ConditionalOnMissingBean(OpenAPI.class)
@@ -27,17 +27,17 @@ public class SwaggerConfiguration {
     @Bean
     public OpenAPI openApi(
         @Value("${spring.application.name}") String applicationName,
-        ProjectInfoProperties projectInfoProperties
+        ProgramBuildInfoProperties programBuildInfoProperties
     ) {
       final var api = new OpenAPI().info(
           new Info()
               .title(applicationName)
-              .version(projectInfoProperties.getVersion())
-              .description(projectInfoProperties.getDescription())
+              .version(programBuildInfoProperties.getVersion())
+              .description(programBuildInfoProperties.getDescription())
       );
       final var server = new Server();
-      log.info("Project info properties: {}", projectInfoProperties);
-      server.setUrl(requireNonNullElse(projectInfoProperties.getRelativePath(), ""));
+      log.info("Project info properties: {}", programBuildInfoProperties);
+      server.setUrl(requireNonNullElse(programBuildInfoProperties.getRelativePath(), ""));
       api.setServers(List.of(server));
       return api;
     }

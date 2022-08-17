@@ -11,6 +11,6 @@ import org.ujar.boot.starter.restful.web.WebConfig;
     WebConfig.class,
     SwaggerConfiguration.class
 })
-@EnableConfigurationProperties(ProjectInfoProperties.class)
+@EnableConfigurationProperties(ProgramBuildInfoProperties.class)
 public class RestfulAutoConfiguration {
 }
