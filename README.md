@@ -1,6 +1,6 @@
 # Spring Boot Starters
 
-[![Build Status](https://drone.c2a2.com/api/badges/ujar-org/ujar-boot-starter/status.svg?ref=refs/heads/main)](https://drone.c2a2.com/ujar-org/ujar-boot-starter)
+[![Build Status](http://iaolg9igjr3tghootxslfe.webrelay.io/api/badges/ujar-org/ujar-boot-starter/status.svg?ref=refs/heads/main)](http://iaolg9igjr3tghootxslfe.webrelay.io/ujar-org/ujar-boot-starter)
 
 | Starter | Status                                                                                                                                                                                                                                                                        |
 |---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
