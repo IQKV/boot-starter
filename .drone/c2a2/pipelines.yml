@@ -4,7 +4,6 @@ type : docker
 
 trigger :
   branch :
-    - main
     - develop
     - feature/*
   event :
