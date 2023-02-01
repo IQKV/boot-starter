@@ -61,8 +61,8 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-metrics/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
-    when:
-      ref:
+    when :
+      ref :
         - refs/tags/*
 
   - name : build ujar-boot-starter-restful
@@ -187,8 +187,8 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
-    when:
-      ref:
+    when :
+      ref :
         - refs/tags/*
 
   - name : publish-snapshot-package ujar-boot-starter-kafka
@@ -223,8 +223,8 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
-    when:
-      ref:
+    when :
+      ref :
         - refs/tags/*
 
   - name : publish-snapshot-package ujar-boot-starter-cache
@@ -259,8 +259,8 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
-    when:
-      ref:
+    when :
+      ref :
         - refs/tags/*
 
   - name : publish-snapshot-package ujar-boot-starter-amqp
@@ -295,8 +295,8 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
-    when:
-      ref:
+    when :
+      ref :
         - refs/tags/*
 
   - name : publish-snapshot-package ujar-boot-starter-logbook
@@ -330,6 +330,6 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
-    when:
-      ref:
+    when :
+      ref :
         - refs/tags/*
