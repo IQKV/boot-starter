@@ -3,11 +3,9 @@ name : CI
 type : docker
 
 trigger :
-  branch :
-    - develop
-    - feature/*
   event :
     - push
+    - tag
 
 volumes :
   - name : m2cache
@@ -44,7 +42,11 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-metrics/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
-
+    when :
+      branch :
+        include :
+          - feature/*
+          - develop
 
   - name : publish-release-package ujar-boot-starter-metrics
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
@@ -59,8 +61,9 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-metrics/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
-    when :
-      event : tag
+    when:
+      ref:
+        - refs/tags/*
 
   - name : build ujar-boot-starter-restful
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
@@ -165,6 +168,11 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
+    when :
+      branch :
+        include :
+          - feature/*
+          - develop
 
   - name : publish-release-package ujar-boot-starter-restful
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
@@ -179,8 +187,9 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
-    when :
-      event : tag
+    when:
+      ref:
+        - refs/tags/*
 
   - name : publish-snapshot-package ujar-boot-starter-kafka
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
@@ -195,7 +204,11 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
-
+    when :
+      branch :
+        include :
+          - feature/*
+          - develop
 
   - name : publish-release-package ujar-boot-starter-kafka
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
@@ -210,8 +223,9 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
-    when :
-      event : tag
+    when:
+      ref:
+        - refs/tags/*
 
   - name : publish-snapshot-package ujar-boot-starter-cache
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
@@ -226,7 +240,11 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
-
+    when :
+      branch :
+        include :
+          - feature/*
+          - develop
 
   - name : publish-release-package ujar-boot-starter-cache
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
@@ -241,8 +259,9 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
-    when :
-      event : tag
+    when:
+      ref:
+        - refs/tags/*
 
   - name : publish-snapshot-package ujar-boot-starter-amqp
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
@@ -257,7 +276,11 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
-
+    when :
+      branch :
+        include :
+          - feature/*
+          - develop
 
   - name : publish-release-package ujar-boot-starter-amqp
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
@@ -272,8 +295,9 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
-    when :
-      event : tag
+    when:
+      ref:
+        - refs/tags/*
 
   - name : publish-snapshot-package ujar-boot-starter-logbook
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
@@ -288,7 +312,11 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
-
+    when :
+      branch :
+        include :
+          - feature/*
+          - develop
 
   - name : publish-release-package ujar-boot-starter-logbook
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
@@ -302,5 +330,6 @@ steps :
         from_secret : DEPLOYER_PASSWORD
     commands :
       - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
-    when :
-      event : tag
+    when:
+      ref:
+        - refs/tags/*
