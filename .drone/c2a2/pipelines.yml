@@ -29,7 +29,7 @@ steps :
       - mvn pmd:check --file ujar-boot-starter-metrics/pom.xml -B -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn org.jacoco:jacoco-maven-plugin:prepare-agent test --file ujar-boot-starter-metrics/pom.xml -B -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
 
-  - name : publish-snapshot-package ujar-boot-starter-metrics
+  - name : publish-snapshot-jar ujar-boot-starter-metrics
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     pull : if-not-exists
     volumes :
@@ -48,7 +48,7 @@ steps :
           - feature/*
           - develop
 
-  - name : publish-release-package ujar-boot-starter-metrics
+  - name : publish-release-jar ujar-boot-starter-metrics
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     pull : if-not-exists
     volumes :
@@ -155,7 +155,7 @@ steps :
       - mvn pmd:check --file ujar-boot-starter-cache/pom.xml -B -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn org.jacoco:jacoco-maven-plugin:prepare-agent test --file ujar-boot-starter-cache/pom.xml -B -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
 
-  - name : publish-snapshot-package ujar-boot-starter-restful
+  - name : publish-snapshot-jar ujar-boot-starter-restful
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     pull : if-not-exists
     volumes :
@@ -174,7 +174,7 @@ steps :
           - feature/*
           - develop
 
-  - name : publish-release-package ujar-boot-starter-restful
+  - name : publish-release-jar ujar-boot-starter-restful
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     pull : if-not-exists
     volumes :
@@ -191,7 +191,7 @@ steps :
       ref :
         - refs/tags/*
 
-  - name : publish-snapshot-package ujar-boot-starter-kafka
+  - name : publish-snapshot-jar ujar-boot-starter-kafka
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     pull : if-not-exists
     volumes :
@@ -210,7 +210,7 @@ steps :
           - feature/*
           - develop
 
-  - name : publish-release-package ujar-boot-starter-kafka
+  - name : publish-release-jar ujar-boot-starter-kafka
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     pull : if-not-exists
     volumes :
@@ -227,7 +227,7 @@ steps :
       ref :
         - refs/tags/*
 
-  - name : publish-snapshot-package ujar-boot-starter-cache
+  - name : publish-snapshot-jar ujar-boot-starter-cache
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     pull : if-not-exists
     volumes :
@@ -246,7 +246,7 @@ steps :
           - feature/*
           - develop
 
-  - name : publish-release-package ujar-boot-starter-cache
+  - name : publish-release-jar ujar-boot-starter-cache
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     pull : if-not-exists
     volumes :
@@ -263,7 +263,7 @@ steps :
       ref :
         - refs/tags/*
 
-  - name : publish-snapshot-package ujar-boot-starter-amqp
+  - name : publish-snapshot-jar ujar-boot-starter-amqp
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     pull : if-not-exists
     volumes :
@@ -282,7 +282,7 @@ steps :
           - feature/*
           - develop
 
-  - name : publish-release-package ujar-boot-starter-amqp
+  - name : publish-release-jar ujar-boot-starter-amqp
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     pull : if-not-exists
     volumes :
@@ -299,7 +299,7 @@ steps :
       ref :
         - refs/tags/*
 
-  - name : publish-snapshot-package ujar-boot-starter-logbook
+  - name : publish-snapshot-jar ujar-boot-starter-logbook
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     pull : if-not-exists
     volumes :
@@ -318,7 +318,7 @@ steps :
           - feature/*
           - develop
 
-  - name : publish-release-package ujar-boot-starter-logbook
+  - name : publish-release-jar ujar-boot-starter-logbook
     image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     volumes :
       - name : m2cache
