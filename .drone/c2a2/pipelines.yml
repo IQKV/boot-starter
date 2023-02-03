@@ -333,3 +333,46 @@ steps :
     when :
       ref :
         - refs/tags/*
+
+---
+
+kind : pipeline
+name : Prepare Release Tag
+type : docker
+trigger :
+  event :
+    - custom
+
+volumes :
+  - name : m2cache
+    host :
+      path : /app/.m2
+
+steps :
+  - name : create-release-tag
+    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+    pull : always
+    volumes :
+      - name : m2cache
+        path : /root/.m2
+    environment :
+      DEPLOYER_USERNAME :
+        from_secret : DEPLOYER_USERNAME
+      DEPLOYER_PASSWORD :
+        from_secret : DEPLOYER_PASSWORD
+    commands :
+      - echo Prepare new release tag ${TAG}
+      - mkdir ${TAG} # easy way to mark tag param required
+      - rmdir ${TAG}
+      - git remote set-url --push origin ${DRONE_GIT_SSH_URL}
+      - git checkout -b v${TAG}
+      - mvn versions:set -DremoveSnapshot --file ujar-boot-starter-metrics/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn versions:set -DremoveSnapshot --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn versions:set -DremoveSnapshot --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn versions:set -DremoveSnapshot --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn versions:set -DremoveSnapshot --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn versions:set -DremoveSnapshot --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - git commit -a -m 'Prepare release ${TAG}'
+      - git tag ${TAG} && git push origin ${TAG}
+      - git tag -d ${TAG} && git checkout ${DRONE_COMMIT_BRANCH} && git branch -D v${TAG}
+      - echo Release ${TAG} created successfully.
