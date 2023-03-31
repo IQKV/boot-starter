@@ -13,60 +13,8 @@ volumes :
       path : /app/.m2
 steps :
 
-  - name : build ujar-boot-starter-metrics
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
-    pull : if-not-exists
-    volumes :
-      - name : m2cache
-        path : /root/.m2
-    environment :
-      DEPLOYER_USERNAME :
-        from_secret : DEPLOYER_USERNAME
-      DEPLOYER_PASSWORD :
-        from_secret : DEPLOYER_PASSWORD
-    commands :
-      - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true -B -V --file ujar-boot-starter-metrics/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn pmd:check --file ujar-boot-starter-metrics/pom.xml -B -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn org.jacoco:jacoco-maven-plugin:prepare-agent test --file ujar-boot-starter-metrics/pom.xml -B -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-
-  - name : publish-snapshot-jar ujar-boot-starter-metrics
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
-    pull : if-not-exists
-    volumes :
-      - name : m2cache
-        path : /root/.m2
-    environment :
-      DEPLOYER_USERNAME :
-        from_secret : DEPLOYER_USERNAME
-      DEPLOYER_PASSWORD :
-        from_secret : DEPLOYER_PASSWORD
-    commands :
-      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-metrics/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
-    when :
-      branch :
-        include :
-          - feature/*
-          - develop
-
-  - name : publish-release-jar ujar-boot-starter-metrics
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
-    pull : if-not-exists
-    volumes :
-      - name : m2cache
-        path : /root/.m2
-    environment :
-      DEPLOYER_USERNAME :
-        from_secret : DEPLOYER_USERNAME
-      DEPLOYER_PASSWORD :
-        from_secret : DEPLOYER_PASSWORD
-    commands :
-      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-metrics/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
-    when :
-      ref :
-        - refs/tags/*
-
   - name : build ujar-boot-starter-restful
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -76,18 +24,15 @@ steps :
         from_secret : DEPLOYER_USERNAME
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
-      SONAR_HOST :
-        from_secret : SONAR_HOST
-      SONAR_TOKEN :
-        from_secret : SONAR_TOKEN
     commands :
-      - mvn clean compile test-compile -B  --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn pmd:check -B --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn com.github.spotbugs:spotbugs-maven-plugin:check -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=true -Dspotbugs.includeTests=true  --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn org.jacoco:jacoco-maven-plugin:prepare-agent package org.jacoco:jacoco-maven-plugin:report sonar:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=ujar-org:ujar-boot-starter-restful -Dsonar.projectName=ujar-org:ujar-boot-starter-restful --batch-mode  --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn clean compile test-compile --batch-mode -Dstyle.color=always --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn pmd:check --batch-mode -Dstyle.color=always --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn -Dstyle.color=always com.github.spotbugs:spotbugs-maven-plugin:4.7.3.0:check --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD  -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=true -Dspotbugs.excludeFilterFile=../spotbugs-exclude.xml -Dspotbugs.includeTests=true
+      - mvn -Dstyle.color=always org.jacoco:jacoco-maven-plugin:prepare-agent verify org.jacoco:jacoco-maven-plugin:report --batch-mode --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn package -Dstyle.color=always -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --batch-mode --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
 
   - name : build ujar-boot-starter-kafka
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -98,12 +43,15 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true -B -V --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn pmd:check --file ujar-boot-starter-kafka/pom.xml -B -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn org.jacoco:jacoco-maven-plugin:prepare-agent test --file ujar-boot-starter-kafka/pom.xml -B -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn clean compile test-compile -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn pmd:check --file ujar-boot-starter-kafka/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn -Dstyle.color=always org.jacoco:jacoco-maven-plugin:prepare-agent verify --file ujar-boot-starter-kafka/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn package -Dstyle.color=always -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+    depends_on:
+      - build ujar-boot-starter-restful
 
   - name : build ujar-boot-starter-amqp
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -114,12 +62,15 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true -B -V --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn pmd:check --file ujar-boot-starter-amqp/pom.xml -B -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn org.jacoco:jacoco-maven-plugin:prepare-agent test --file ujar-boot-starter-amqp/pom.xml -B -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn clean compile test-compile -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn pmd:check --file ujar-boot-starter-amqp/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn -Dstyle.color=always org.jacoco:jacoco-maven-plugin:prepare-agent verify --file ujar-boot-starter-amqp/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn package -Dstyle.color=always -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+    depends_on:
+      - build ujar-boot-starter-kafka
 
-  - name : build ujar-boot-starter-logbook
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+  - name : build ujar-boot-starter-observability
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -129,18 +80,16 @@ steps :
         from_secret : DEPLOYER_USERNAME
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
-      SONAR_HOST :
-        from_secret : SONAR_HOST
-      SONAR_TOKEN :
-        from_secret : SONAR_TOKEN
     commands :
-      - mvn clean compile test-compile -B  --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn pmd:check -B --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn com.github.spotbugs:spotbugs-maven-plugin:check -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=true -Dspotbugs.includeTests=true  --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package org.jacoco:jacoco-maven-plugin:report sonar:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=ujar-org:ujar-boot-starter-logbook -Dsonar.projectName=ujar-org:ujar-boot-starter-logbook --batch-mode  --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn clean compile test-compile -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn pmd:check --file ujar-boot-starter-observability/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn -Dstyle.color=always org.jacoco:jacoco-maven-plugin:prepare-agent verify --file ujar-boot-starter-observability/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn package -Dstyle.color=always -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+    depends_on:
+      - build ujar-boot-starter-amqp
 
   - name : build ujar-boot-starter-cache
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -151,12 +100,15 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true -B -V --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn pmd:check --file ujar-boot-starter-cache/pom.xml -B -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn org.jacoco:jacoco-maven-plugin:prepare-agent test --file ujar-boot-starter-cache/pom.xml -B -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn clean compile test-compile -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn pmd:check --file ujar-boot-starter-cache/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn -Dstyle.color=always org.jacoco:jacoco-maven-plugin:prepare-agent verify --file ujar-boot-starter-cache/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn package -Dstyle.color=always -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+    depends_on:
+      - build ujar-boot-starter-observability
 
   - name : publish-snapshot-jar ujar-boot-starter-restful
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -167,15 +119,18 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
     when :
       branch :
         include :
-          - feature/*
-          - develop
+          - "develop"
+          - "prerelease/*"
+          - "*.*.x"
+    depends_on:
+      - build ujar-boot-starter-cache
 
   - name : publish-release-jar ujar-boot-starter-restful
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -186,13 +141,29 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
     when :
       ref :
-        - refs/tags/*
+        - "refs/tags/*"
+    depends_on:
+      - build ujar-boot-starter-cache
+
+  - name : create-github-release ujar-boot-starter-restful
+    image : plugins/github-release
+    settings :
+      api_key :
+        from_secret : GITHUB_API_KEY
+      title : ujar-boot-starter-restful ${DRONE_TAG}
+      note : "**Full Changelog**: https://github.com/${DRONE_REPO}/commits/${DRONE_TAG}"
+      files : ./ujar-boot-starter-restful/target/*.jar
+    when :
+      ref :
+        - "refs/tags/*"
+    depends_on :
+      - publish-release-jar ujar-boot-starter-restful
 
   - name : publish-snapshot-jar ujar-boot-starter-kafka
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -203,15 +174,18 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
     when :
       branch :
         include :
-          - feature/*
-          - develop
+          - "develop"
+          - "prerelease/*"
+          - "*.*.x"
+    depends_on:
+      - build ujar-boot-starter-cache
 
   - name : publish-release-jar ujar-boot-starter-kafka
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -222,13 +196,29 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
     when :
       ref :
-        - refs/tags/*
+        - "refs/tags/*"
+    depends_on:
+      - build ujar-boot-starter-cache
+
+  - name : create-github-release ujar-boot-starter-kafka
+    image : plugins/github-release
+    settings :
+      api_key :
+        from_secret : GITHUB_API_KEY
+      title : ujar-boot-starter-kafka ${DRONE_TAG}
+      note : "**Full Changelog**: https://github.com/${DRONE_REPO}/commits/${DRONE_TAG}"
+      files : ./ujar-boot-starter-kafka/target/*.jar
+    when :
+      ref :
+        - "refs/tags/*"
+    depends_on :
+      - publish-release-jar ujar-boot-starter-kafka
 
   - name : publish-snapshot-jar ujar-boot-starter-cache
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -239,15 +229,18 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
     when :
       branch :
         include :
-          - feature/*
-          - develop
+          - "develop"
+          - "prerelease/*"
+          - "*.*.x"
+    depends_on:
+      - build ujar-boot-starter-cache
 
   - name : publish-release-jar ujar-boot-starter-cache
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -258,13 +251,29 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
     when :
       ref :
-        - refs/tags/*
+        - "refs/tags/*"
+    depends_on:
+      - build ujar-boot-starter-cache
+
+  - name : create-github-release ujar-boot-starter-cache
+    image : plugins/github-release
+    settings :
+      api_key :
+        from_secret : GITHUB_API_KEY
+      title : ujar-boot-starter-cache ${DRONE_TAG}
+      note : "**Full Changelog**: https://github.com/${DRONE_REPO}/commits/${DRONE_TAG}"
+      files : ./ujar-boot-starter-cache/target/*.jar
+    when :
+      ref :
+        - "refs/tags/*"
+    depends_on :
+      - publish-release-jar ujar-boot-starter-cache
 
   - name : publish-snapshot-jar ujar-boot-starter-amqp
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -275,15 +284,18 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
     when :
       branch :
         include :
-          - feature/*
-          - develop
+          - "develop"
+          - "prerelease/*"
+          - "*.*.x"
+    depends_on:
+      - build ujar-boot-starter-cache
 
   - name : publish-release-jar ujar-boot-starter-amqp
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -294,13 +306,29 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
     when :
       ref :
-        - refs/tags/*
+        - "refs/tags/*"
+    depends_on:
+      - build ujar-boot-starter-cache
 
-  - name : publish-snapshot-jar ujar-boot-starter-logbook
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+  - name : create-github-release ujar-boot-starter-amqp
+    image : plugins/github-release
+    settings :
+      api_key :
+        from_secret : GITHUB_API_KEY
+      title : ujar-boot-starter-amqp ${DRONE_TAG}
+      note : "**Full Changelog**: https://github.com/${DRONE_REPO}/commits/${DRONE_TAG}"
+      files : ./ujar-boot-starter-amqp/target/*.jar
+    when :
+      ref :
+        - "refs/tags/*"
+    depends_on :
+      - publish-release-jar ujar-boot-starter-amqp
+
+  - name : publish-snapshot-jar ujar-boot-starter-observability
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -311,15 +339,19 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
     when :
       branch :
         include :
-          - feature/*
-          - develop
+          - "develop"
+          - "prerelease/*"
+          - "*.*.x"
+    depends_on:
+      - build ujar-boot-starter-cache
 
-  - name : publish-release-jar ujar-boot-starter-logbook
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
+  - name : publish-release-jar ujar-boot-starter-observability
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    pull : if-not-exists
     volumes :
       - name : m2cache
         path : /root/.m2
@@ -329,10 +361,26 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
     when :
       ref :
-        - refs/tags/*
+        - "refs/tags/*"
+    depends_on:
+      - build ujar-boot-starter-cache
+
+  - name : create-github-release ujar-boot-starter-observability
+    image : plugins/github-release
+    settings :
+      api_key :
+        from_secret : GITHUB_API_KEY
+      title : ujar-boot-starter-observability ${DRONE_TAG}
+      note : "**Full Changelog**: https://github.com/${DRONE_REPO}/commits/${DRONE_TAG}"
+      files : ./ujar-boot-starter-observability/target/*.jar
+    when :
+      ref :
+        - "refs/tags/*"
+    depends_on :
+      - publish-release-jar ujar-boot-starter-observability
 
 ---
 
@@ -342,8 +390,9 @@ type : docker
 trigger :
   event :
     - custom
-  branch:
-    - develop
+  branch :
+    - "develop"
+    - "*.*.x"
 
 volumes :
   - name : m2cache
@@ -352,8 +401,8 @@ volumes :
 
 steps :
   - name : create-release-tag
-    image : docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
-    pull : always
+    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    pull : if-not-exists
     volumes :
       - name : m2cache
         path : /root/.m2
@@ -363,50 +412,49 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - echo Prepare new release tag ${TAG}
-      - mkdir ${TAG}
-      - rmdir ${TAG}
-      - export NEXT_SNAPSHOT=$(increment_version -m ${TAG})-SNAPSHOT
+      - echo Prepare new version ${RELEASE_VERSION}
+      - mkdir ${RELEASE_VERSION}
+      - rmdir ${RELEASE_VERSION}
+      - export NEXT_SNAPSHOT=${SNAPSHOT_VERSION}-SNAPSHOT
+      - export GIT_AUTHOR_NAME=$${SVC_BUILD_GIT_USERNAME}
+      - export GIT_AUTHOR_EMAIL=$${SVC_BUILD_GIT_EMAIL}
+      - export GIT_COMMITTER_NAME=$${SVC_BUILD_GIT_USERNAME}
+      - export GIT_COMMITTER_EMAIL=$${SVC_BUILD_GIT_EMAIL}
       - git remote set-url --push origin ${DRONE_GIT_SSH_URL}
-      - git checkout -b v${TAG}
-      - mvn versions:set -DremoveSnapshot --file ujar-boot-starter-metrics/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn versions:set -DnewVersion=${TAG} --file ujar-boot-starter-metrics/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn versions:update-parent --file ujar-boot-starter-metrics/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - git checkout -b v${RELEASE_VERSION}
       - mvn versions:set -DremoveSnapshot --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn versions:set -DnewVersion=${TAG} --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn versions:set -DnewVersion=${RELEASE_VERSION} --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn versions:update-parent --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn versions:set -DremoveSnapshot --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn versions:set -DnewVersion=${TAG} --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn versions:set -DnewVersion=${RELEASE_VERSION} --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn versions:update-parent --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn versions:set -DremoveSnapshot --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn versions:set -DnewVersion=${TAG} --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn versions:set -DnewVersion=${RELEASE_VERSION} --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn versions:update-parent --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn versions:set -DremoveSnapshot --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn versions:set -DnewVersion=${TAG} --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn versions:update-parent --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn versions:set -DremoveSnapshot --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn versions:set -DnewVersion=${RELEASE_VERSION} --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn versions:update-parent --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn versions:set -DremoveSnapshot --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn versions:set -DnewVersion=${TAG} --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn versions:set -DnewVersion=${RELEASE_VERSION} --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn versions:update-parent --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - >-
-        git commit -a -m "feat: prepare new release $${TAG}"
-      - git tag ${TAG} && git push origin ${TAG}
-      - echo "✅ Release tag ${TAG} was created."
+        git commit -a -m "feat: bump version to $${RELEASE_VERSION}"
+      - git tag ${RELEASE_VERSION} && git push origin ${RELEASE_VERSION}
+      - echo "✅ Release tag ${RELEASE_VERSION} was created."
       - sleep 10
-      - git tag -d ${TAG} && git checkout ${DRONE_COMMIT_BRANCH} && git branch -D v${TAG}
-      - mvn versions:set -DnewVersion=$${NEXT_SNAPSHOT} --file ujar-boot-starter-metrics/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn versions:update-parent -DallowSnapshots=true --file ujar-boot-starter-metrics/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - git tag -d ${RELEASE_VERSION} && git checkout ${DRONE_COMMIT_BRANCH} && git branch -D v${RELEASE_VERSION}
       - mvn versions:set -DnewVersion=$${NEXT_SNAPSHOT} --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn versions:update-parent -DallowSnapshots=true --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn versions:set -DnewVersion=$${NEXT_SNAPSHOT} --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn versions:update-parent -DallowSnapshots=true --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn versions:set -DnewVersion=$${NEXT_SNAPSHOT} --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn versions:update-parent -DallowSnapshots=true --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn versions:set -DnewVersion=$${NEXT_SNAPSHOT} --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn versions:update-parent -DallowSnapshots=true --file ujar-boot-starter-logbook/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn versions:set -DnewVersion=$${NEXT_SNAPSHOT} --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn versions:update-parent -DallowSnapshots=true --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn versions:set -DnewVersion=$${NEXT_SNAPSHOT} --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn versions:update-parent -DallowSnapshots=true --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - >-
         git commit -a -m "feat: create new $${NEXT_SNAPSHOT}"
       - git push origin ${DRONE_COMMIT_BRANCH}
       - echo "✅ Started $${NEXT_SNAPSHOT}."
-      - echo "🚀 Good job, new version ${TAG} was released successfully."
+      - echo "🚀 Good job, new version ${RELEASE_VERSION} was released successfully."
