@@ -1,0 +1,28 @@
+{
+    "groups": [
+        {
+            "name": "ujar.build",
+            "description": "Application build info.",
+            "type": "org.ujar.boot.build.ApplicationBuildInfoProperties",
+            "sourceType": "org.ujar.boot.build.ApplicationBuildInfoProperties"
+        }
+    ],
+    "properties": [
+        {
+            "name": "ujar.build.description",
+            "type": "java.lang.String",
+            "description": "Project description."
+        },
+        {
+            "name": "ujar.build.relative-path",
+            "type": "java.lang.String",
+            "description": "Swagger UI relative path."
+        },
+        {
+            "name": "ujar.build.version",
+            "type": "java.lang.String",
+            "description": "Project version."
+        }
+    ],
+    "hints": []
+}
