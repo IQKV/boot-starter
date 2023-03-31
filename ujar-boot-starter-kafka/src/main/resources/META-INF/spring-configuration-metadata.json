@@ -1,0 +1,137 @@
+{
+    "groups": [
+        {
+            "name": "ujar.build",
+            "description": "Application build info.",
+            "type": "org.ujar.boot.build.ApplicationBuildInfoProperties",
+            "sourceType": "org.ujar.boot.build.ApplicationBuildInfoProperties"
+        },
+        {
+            "name": "ujar.kafka.error-handling",
+            "description": "Dead-Latter Topic and Backoff Configuration.",
+            "type": "org.ujar.boot.kafka.config.KafkaErrorHandlingProperties",
+            "sourceType": "org.ujar.boot.kafka.config.KafkaErrorHandlingProperties"
+        },
+        {
+            "name": "ujar.kafka.error-handling.backoff",
+            "type": "org.ujar.boot.kafka.config.errorhandling.Backoff",
+            "sourceType": "org.ujar.boot.kafka.config.errorhandling.Backoff"
+        },
+        {
+            "name": "ujar.kafka.error-handling.dead-letter",
+            "type": "org.ujar.boot.kafka.config.errorhandling.DeadLetter",
+            "sourceType": "org.ujar.boot.kafka.config.errorhandling.DeadLetter"
+        }
+    ],
+    "properties": [
+        {
+            "name": "ujar.build.description",
+            "type": "java.lang.String",
+            "description": "Project description."
+        },
+        {
+            "name": "ujar.build.relative-path",
+            "type": "java.lang.String",
+            "description": "Swagger UI relative path."
+        },
+        {
+            "name": "ujar.build.version",
+            "type": "java.lang.String",
+            "description": "Project version."
+        },
+        {
+            "name": "management.health.kafka.enabled",
+            "type": "java.lang.Boolean",
+            "description": "Whether to enable Kafka health check.",
+            "defaultValue": true
+        },
+        {
+            "name": "management.health.kafka.response-timeout",
+            "type": "java.lang.Integer",
+            "description": "Server response timeout.",
+            "defaultValue": true
+        },
+        {
+            "name": "ujar.kafka.admin",
+            "description": "Allows to create topics on application startup (using Kafka Admin).",
+            "type": "org.ujar.boot.kafka.config.KafkaAdminProperties"
+        },
+        {
+            "name": "ujar.kafka.topics",
+            "description": "Topic definitions.",
+            "type": "org.ujar.boot.kafka.config.KafkaTopicDefinitionProperties"
+        },
+        {
+            "name": "ujar.kafka.topics.keys",
+            "description": "Topic key.",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "ujar.kafka.topics.values",
+            "description": "Topic definition.",
+            "type": "org.ujar.boot.kafka.config.topic.TopicDefinition"
+        },
+        {
+            "name": "ujar.kafka.error-handling.dead-letter.retention",
+            "description": "Retention period for dead letter queue.",
+            "type": "java.time.Duration",
+            "sourceType": "org.ujar.boot.kafka.config.errorhandling.DeadLetter"
+        },
+        {
+            "name": "ujar.kafka.error-handling.dead-letter.suffix",
+            "description": "Customizable DLT suffixed topic name.",
+            "type": "java.lang.String",
+            "sourceType": "org.ujar.boot.kafka.config.errorhandling.DeadLetter"
+        },
+        {
+            "name": "ujar.kafka.error-handling.backoff.initial-interval",
+            "description": "The initial interval in time-based amount.",
+            "type": "java.time.Duration",
+            "sourceType": "org.ujar.boot.kafka.config.errorhandling.Backoff"
+        },
+        {
+            "name": "ujar.kafka.error-handling.backoff.max-interval",
+            "description": "The max interval in time-based amount.",
+            "type": "java.time.Duration",
+            "sourceType": "org.ujar.boot.kafka.config.errorhandling.Backoff"
+        },
+        {
+            "name": "ujar.kafka.error-handling.backoff.max-retries",
+            "description": "The max retries.",
+            "type": "java.lang.Integer",
+            "sourceType": "org.ujar.boot.kafka.config.errorhandling.Backoff"
+        },
+        {
+            "name": "ujar.kafka.error-handling.backoff.multiplier",
+            "description": "The value to multiply the current interval by for each retry attempt.",
+            "type": "java.lang.Double",
+            "sourceType": "org.ujar.boot.kafka.config.errorhandling.Backoff"
+        }
+    ],
+    "hints": [
+        {
+            "name": "ujar.kafka.topics.keys",
+            "values": [
+                {
+                    "value": "test_topic"
+                },
+                {
+                    "value": "test_topic.DLT"
+                }
+            ]
+        },
+        {
+            "name": "ujar.kafka.topics.values",
+            "values": [
+                {
+                    "value": {
+                        "name": "test_topic",
+                        "partitions": 1,
+                        "retention": "1d"
+                    },
+                    "description": "Define topic parameters."
+                }
+            ]
+        }
+    ]
+}
