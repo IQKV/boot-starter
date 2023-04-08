@@ -1,5 +1,5 @@
 kind : pipeline
-name : CI
+name : CodeVerification
 type : docker
 
 trigger :
@@ -11,10 +11,11 @@ volumes :
   - name : m2cache
     host :
       path : /app/.m2
+
 steps :
 
   - name : build ujar-boot-starter-restful
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -28,11 +29,11 @@ steps :
       - mvn clean compile test-compile --batch-mode -Dstyle.color=always --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn pmd:check --batch-mode -Dstyle.color=always --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn -Dstyle.color=always com.github.spotbugs:spotbugs-maven-plugin:4.7.3.0:check --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD  -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=true -Dspotbugs.excludeFilterFile=../spotbugs-exclude.xml -Dspotbugs.includeTests=true
-      - mvn -Dstyle.color=always org.jacoco:jacoco-maven-plugin:prepare-agent verify org.jacoco:jacoco-maven-plugin:report --batch-mode --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn package -Dstyle.color=always -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --batch-mode --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn -Dstyle.color=always -Dmaven.javadoc.skip=true verify org.jacoco:jacoco-maven-plugin:report --batch-mode --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn package -Dstyle.color=always -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --batch-mode --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
 
   - name : build ujar-boot-starter-kafka
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -43,15 +44,15 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn clean compile test-compile -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn clean compile test-compile -DskipTests -Dmaven.test.skip=true -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn pmd:check --file ujar-boot-starter-kafka/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn -Dstyle.color=always org.jacoco:jacoco-maven-plugin:prepare-agent verify --file ujar-boot-starter-kafka/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn package -Dstyle.color=always -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-    depends_on:
+      - mvn -Dstyle.color=always -Dmaven.javadoc.skip=true verify --file ujar-boot-starter-kafka/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn package -Dstyle.color=always -DskipTests -Dmaven.test.skip=true -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+    depends_on :
       - build ujar-boot-starter-restful
 
   - name : build ujar-boot-starter-amqp
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -62,15 +63,15 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn clean compile test-compile -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn clean compile test-compile -DskipTests -Dmaven.test.skip=true -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn pmd:check --file ujar-boot-starter-amqp/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn -Dstyle.color=always org.jacoco:jacoco-maven-plugin:prepare-agent verify --file ujar-boot-starter-amqp/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn package -Dstyle.color=always -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-    depends_on:
+      - mvn -Dstyle.color=always -Dmaven.javadoc.skip=true verify --file ujar-boot-starter-amqp/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn package -Dstyle.color=always -DskipTests -Dmaven.test.skip=true -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+    depends_on :
       - build ujar-boot-starter-kafka
 
   - name : build ujar-boot-starter-observability
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -81,15 +82,15 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn clean compile test-compile -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn clean compile test-compile -DskipTests -Dmaven.test.skip=true -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn pmd:check --file ujar-boot-starter-observability/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn -Dstyle.color=always org.jacoco:jacoco-maven-plugin:prepare-agent verify --file ujar-boot-starter-observability/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn package -Dstyle.color=always -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-    depends_on:
+      - mvn -Dstyle.color=always -Dmaven.javadoc.skip=true verify --file ujar-boot-starter-observability/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn package -Dstyle.color=always -DskipTests -Dmaven.test.skip=true -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+    depends_on :
       - build ujar-boot-starter-amqp
 
   - name : build ujar-boot-starter-cache
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -100,15 +101,15 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn clean compile test-compile -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn clean compile test-compile -DskipTests -Dmaven.test.skip=true -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn pmd:check --file ujar-boot-starter-cache/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn -Dstyle.color=always org.jacoco:jacoco-maven-plugin:prepare-agent verify --file ujar-boot-starter-cache/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn package -Dstyle.color=always -DskipTests -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-    depends_on:
+      - mvn -Dstyle.color=always -Dmaven.javadoc.skip=true verify --file ujar-boot-starter-cache/pom.xml --batch-mode -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn package -Dstyle.color=always -DskipTests -Dmaven.test.skip=true -Dcheckstyle.skip=true --batch-mode -V --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+    depends_on :
       - build ujar-boot-starter-observability
 
   - name : publish-snapshot-jar ujar-boot-starter-restful
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -119,18 +120,18 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=appfactory-snapshots-repository::https://nexus.c2a2.com/repository/maven-snapshots
     when :
       branch :
         include :
           - "develop"
           - "prerelease/*"
           - "*.*.x"
-    depends_on:
+    depends_on :
       - build ujar-boot-starter-cache
 
   - name : publish-release-jar ujar-boot-starter-restful
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -141,11 +142,11 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=appfactory-releases-repository::https://nexus.c2a2.com/repository/maven-releases
     when :
       ref :
         - "refs/tags/*"
-    depends_on:
+    depends_on :
       - build ujar-boot-starter-cache
 
   - name : create-github-release ujar-boot-starter-restful
@@ -163,7 +164,7 @@ steps :
       - publish-release-jar ujar-boot-starter-restful
 
   - name : publish-snapshot-jar ujar-boot-starter-kafka
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -174,18 +175,18 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=appfactory-snapshots-repository::https://nexus.c2a2.com/repository/maven-snapshots
     when :
       branch :
         include :
           - "develop"
           - "prerelease/*"
           - "*.*.x"
-    depends_on:
+    depends_on :
       - build ujar-boot-starter-cache
 
   - name : publish-release-jar ujar-boot-starter-kafka
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -196,11 +197,11 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=appfactory-releases-repository::https://nexus.c2a2.com/repository/maven-releases
     when :
       ref :
         - "refs/tags/*"
-    depends_on:
+    depends_on :
       - build ujar-boot-starter-cache
 
   - name : create-github-release ujar-boot-starter-kafka
@@ -218,7 +219,7 @@ steps :
       - publish-release-jar ujar-boot-starter-kafka
 
   - name : publish-snapshot-jar ujar-boot-starter-cache
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -229,18 +230,18 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=appfactory-snapshots-repository::https://nexus.c2a2.com/repository/maven-snapshots
     when :
       branch :
         include :
           - "develop"
           - "prerelease/*"
           - "*.*.x"
-    depends_on:
+    depends_on :
       - build ujar-boot-starter-cache
 
   - name : publish-release-jar ujar-boot-starter-cache
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -251,11 +252,11 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=appfactory-releases-repository::https://nexus.c2a2.com/repository/maven-releases
     when :
       ref :
         - "refs/tags/*"
-    depends_on:
+    depends_on :
       - build ujar-boot-starter-cache
 
   - name : create-github-release ujar-boot-starter-cache
@@ -273,7 +274,7 @@ steps :
       - publish-release-jar ujar-boot-starter-cache
 
   - name : publish-snapshot-jar ujar-boot-starter-amqp
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -284,18 +285,18 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=appfactory-snapshots-repository::https://nexus.c2a2.com/repository/maven-snapshots
     when :
       branch :
         include :
           - "develop"
           - "prerelease/*"
           - "*.*.x"
-    depends_on:
+    depends_on :
       - build ujar-boot-starter-cache
 
   - name : publish-release-jar ujar-boot-starter-amqp
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -306,11 +307,11 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=appfactory-releases-repository::https://nexus.c2a2.com/repository/maven-releases
     when :
       ref :
         - "refs/tags/*"
-    depends_on:
+    depends_on :
       - build ujar-boot-starter-cache
 
   - name : create-github-release ujar-boot-starter-amqp
@@ -328,7 +329,7 @@ steps :
       - publish-release-jar ujar-boot-starter-amqp
 
   - name : publish-snapshot-jar ujar-boot-starter-observability
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -339,18 +340,18 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-snapshots-repository::default::https://nexus.c2a2.com/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=appfactory-snapshots-repository::https://nexus.c2a2.com/repository/maven-snapshots
     when :
       branch :
         include :
           - "develop"
           - "prerelease/*"
           - "*.*.x"
-    depends_on:
+    depends_on :
       - build ujar-boot-starter-cache
 
   - name : publish-release-jar ujar-boot-starter-observability
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -361,11 +362,11 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=ujar-releases-repository::default::https://nexus.c2a2.com/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file ujar-boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=appfactory-releases-repository::https://nexus.c2a2.com/repository/maven-releases
     when :
       ref :
         - "refs/tags/*"
-    depends_on:
+    depends_on :
       - build ujar-boot-starter-cache
 
   - name : create-github-release ujar-boot-starter-observability
@@ -385,7 +386,7 @@ steps :
 ---
 
 kind : pipeline
-name : CreateReleaseManually
+name : ManualRelease
 type : docker
 trigger :
   event :
@@ -401,7 +402,8 @@ volumes :
 
 steps :
   - name : create-release-tag
-    image : docker-registry.c2a2.com/ujar/svc-builder:openjdk-19-slim
+    failure : ignore
+    image : docker-registry.c2a2.com/svc-builder:openjdk-19-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
