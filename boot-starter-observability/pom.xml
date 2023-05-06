@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.ujar.boot</groupId>
-    <artifactId>ujar-boot-starter-observability</artifactId>
+    <artifactId>boot-starter-observability</artifactId>
     <version>23.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>ujar-boot-starter-observability</name>
+    <name>boot-starter-observability</name>
     <description>Observability support</description>
     <licenses>
         <license>
@@ -33,7 +33,7 @@
 
     <parent>
         <groupId>org.ujar.boot</groupId>
-        <artifactId>ujar-boot-parent-pom</artifactId>
+        <artifactId>boot-parent-pom</artifactId>
         <version>23.0.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
