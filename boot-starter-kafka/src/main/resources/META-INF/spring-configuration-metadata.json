@@ -32,7 +32,7 @@
         {
             "name": "ujar.build.relative-path",
             "type": "java.lang.String",
-            "description": "Swagger UI relative path."
+            "description": "Application relative path indicator."
         },
         {
             "name": "ujar.build.version",

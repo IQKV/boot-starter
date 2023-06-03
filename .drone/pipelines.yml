@@ -15,7 +15,7 @@ volumes :
 steps :
 
   - name : build boot-starter-restful
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -29,11 +29,11 @@ steps :
     commands :
       - mvn clean compile test-compile --batch-mode -Dstyle.color=always --file boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn pmd:check --batch-mode -Dstyle.color=always --file boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn -Dstyle.color=always com.github.spotbugs:spotbugs-maven-plugin:4.7.3.0:check --file boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD  -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=true -Dspotbugs.excludeFilterFile=../spotbugs-exclude.xml -Dspotbugs.includeTests=true
+      - mvn -Dstyle.color=always com.github.spotbugs:spotbugs-maven-plugin:4.7.3.4:check --file boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD  -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=true -Dspotbugs.excludeFilterFile=../spotbugs-exclude.xml -Dspotbugs.includeTests=true
       - mvn verify -Dstyle.color=always -Dmaven.javadoc.skip=true org.jacoco:jacoco-maven-plugin:report --batch-mode --file boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
 
   - name : build boot-starter-kafka
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -52,7 +52,7 @@ steps :
       - build boot-starter-restful
 
   - name : build boot-starter-amqp
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -71,7 +71,7 @@ steps :
       - build boot-starter-kafka
 
   - name : build boot-starter-observability
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -90,7 +90,7 @@ steps :
       - build boot-starter-amqp
 
   - name : build boot-starter-cache
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -109,7 +109,7 @@ steps :
       - build boot-starter-observability
 
   - name : publish-snapshot-jar boot-starter-restful
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -121,7 +121,7 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=manufacturing-snapshots-repository::https://nexus.continuousdelivery.store/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=kh-contrib-snapshots-repo::https://know-how.nexus/repository/maven-snapshots
     when :
       branch :
         include :
@@ -132,7 +132,7 @@ steps :
       - build boot-starter-cache
 
   - name : publish-release-jar boot-starter-restful
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -144,7 +144,7 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=manufacturing-releases-repository::https://nexus.continuousdelivery.store/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-restful/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=kh-contrib-releases-repo::https://know-how.nexus/repository/maven-releases
     when :
       ref :
         - "refs/tags/*"
@@ -166,7 +166,7 @@ steps :
       - publish-release-jar boot-starter-restful
 
   - name : publish-snapshot-jar boot-starter-kafka
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -178,7 +178,7 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=manufacturing-snapshots-repository::https://nexus.continuousdelivery.store/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=kh-contrib-snapshots-repo::https://know-how.nexus/repository/maven-snapshots
     when :
       branch :
         include :
@@ -189,7 +189,7 @@ steps :
       - build boot-starter-cache
 
   - name : publish-release-jar boot-starter-kafka
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -201,7 +201,7 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=manufacturing-releases-repository::https://nexus.continuousdelivery.store/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-kafka/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=kh-contrib-releases-repo::https://know-how.nexus/repository/maven-releases
     when :
       ref :
         - "refs/tags/*"
@@ -223,7 +223,7 @@ steps :
       - publish-release-jar boot-starter-kafka
 
   - name : publish-snapshot-jar boot-starter-cache
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -235,7 +235,7 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=manufacturing-snapshots-repository::https://nexus.continuousdelivery.store/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=kh-contrib-snapshots-repo::https://know-how.nexus/repository/maven-snapshots
     when :
       branch :
         include :
@@ -246,7 +246,7 @@ steps :
       - build boot-starter-cache
 
   - name : publish-release-jar boot-starter-cache
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -258,7 +258,7 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=manufacturing-releases-repository::https://nexus.continuousdelivery.store/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-cache/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=kh-contrib-releases-repo::https://know-how.nexus/repository/maven-releases
     when :
       ref :
         - "refs/tags/*"
@@ -280,7 +280,7 @@ steps :
       - publish-release-jar boot-starter-cache
 
   - name : publish-snapshot-jar boot-starter-amqp
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -292,7 +292,7 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=manufacturing-snapshots-repository::https://nexus.continuousdelivery.store/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=kh-contrib-snapshots-repo::https://know-how.nexus/repository/maven-snapshots
     when :
       branch :
         include :
@@ -303,7 +303,7 @@ steps :
       - build boot-starter-cache
 
   - name : publish-release-jar boot-starter-amqp
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -315,7 +315,7 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=manufacturing-releases-repository::https://nexus.continuousdelivery.store/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-amqp/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=kh-contrib-releases-repo::https://know-how.nexus/repository/maven-releases
     when :
       ref :
         - "refs/tags/*"
@@ -337,7 +337,7 @@ steps :
       - publish-release-jar boot-starter-amqp
 
   - name : publish-snapshot-jar boot-starter-observability
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -349,7 +349,7 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=manufacturing-snapshots-repository::https://nexus.continuousdelivery.store/repository/maven-snapshots
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=kh-contrib-snapshots-repo::https://know-how.nexus/repository/maven-snapshots
     when :
       branch :
         include :
@@ -360,7 +360,7 @@ steps :
       - build boot-starter-cache
 
   - name : publish-release-jar boot-starter-observability
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -372,7 +372,7 @@ steps :
       DEPLOYER_PASSWORD :
         from_secret : DEPLOYER_PASSWORD
     commands :
-      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=manufacturing-releases-repository::https://nexus.continuousdelivery.store/repository/maven-releases
+      - mvn deploy -DskipTests -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true --file boot-starter-observability/pom.xml -s ../maven-settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD -DaltDeploymentRepository=kh-contrib-releases-repo::https://know-how.nexus/repository/maven-releases
     when :
       ref :
         - "refs/tags/*"
@@ -413,7 +413,7 @@ volumes :
 steps :
   - name : create-release-tag
     failure : ignore
-    image : docker-registry.continuousdelivery.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
+    image : know-how.store/svc-builder:ibm-semeru-runtimes-open-17-jdk-focal
     pull : if-not-exists
     volumes :
       - name : m2cache
