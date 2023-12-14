@@ -1,8 +1,8 @@
-package org.ujar.boot.starter.amqp;
+package org.iqkv.boot.starter.amqp;
 
+import org.iqkv.boot.build.BuildInfoConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.ujar.boot.build.BuildInfoConfig;
 
 @Configuration
 @Import(BuildInfoConfig.class)

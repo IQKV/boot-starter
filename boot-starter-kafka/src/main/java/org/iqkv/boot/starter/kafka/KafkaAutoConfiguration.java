@@ -1,13 +1,13 @@
-package org.ujar.boot.starter.kafka;
+package org.iqkv.boot.starter.kafka;
 
+import org.iqkv.boot.build.BuildInfoConfig;
+import org.iqkv.boot.kafka.config.KafkaAdminProperties;
+import org.iqkv.boot.kafka.config.KafkaErrorHandlingProperties;
+import org.iqkv.boot.kafka.config.KafkaHealthIndicatorConfig;
+import org.iqkv.boot.kafka.config.KafkaTopicDefinitionProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.ujar.boot.build.BuildInfoConfig;
-import org.ujar.boot.kafka.config.KafkaAdminProperties;
-import org.ujar.boot.kafka.config.KafkaErrorHandlingProperties;
-import org.ujar.boot.kafka.config.KafkaHealthIndicatorConfig;
-import org.ujar.boot.kafka.config.KafkaTopicDefinitionProperties;
 
 @Configuration
 @EnableConfigurationProperties(value = {
