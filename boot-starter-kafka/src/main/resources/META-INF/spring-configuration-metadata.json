@@ -1,41 +1,41 @@
 {
     "groups": [
         {
-            "name": "ujar.build",
+            "name": "iqkv.build",
             "description": "Application build info.",
-            "type": "org.ujar.boot.build.ApplicationBuildInfoProperties",
-            "sourceType": "org.ujar.boot.build.ApplicationBuildInfoProperties"
+            "type": "org.iqkv.boot.build.ApplicationBuildInfoProperties",
+            "sourceType": "org.iqkv.boot.build.ApplicationBuildInfoProperties"
         },
         {
-            "name": "ujar.kafka.error-handling",
+            "name": "iqkv.kafka.error-handling",
             "description": "Dead-Latter Topic and Backoff Configuration.",
-            "type": "org.ujar.boot.kafka.config.KafkaErrorHandlingProperties",
-            "sourceType": "org.ujar.boot.kafka.config.KafkaErrorHandlingProperties"
+            "type": "org.iqkv.boot.kafka.config.KafkaErrorHandlingProperties",
+            "sourceType": "org.iqkv.boot.kafka.config.KafkaErrorHandlingProperties"
         },
         {
-            "name": "ujar.kafka.error-handling.backoff",
-            "type": "org.ujar.boot.kafka.config.errorhandling.Backoff",
-            "sourceType": "org.ujar.boot.kafka.config.errorhandling.Backoff"
+            "name": "iqkv.kafka.error-handling.backoff",
+            "type": "org.iqkv.boot.kafka.config.errorhandling.Backoff",
+            "sourceType": "org.iqkv.boot.kafka.config.errorhandling.Backoff"
         },
         {
-            "name": "ujar.kafka.error-handling.dead-letter",
-            "type": "org.ujar.boot.kafka.config.errorhandling.DeadLetter",
-            "sourceType": "org.ujar.boot.kafka.config.errorhandling.DeadLetter"
+            "name": "iqkv.kafka.error-handling.dead-letter",
+            "type": "org.iqkv.boot.kafka.config.errorhandling.DeadLetter",
+            "sourceType": "org.iqkv.boot.kafka.config.errorhandling.DeadLetter"
         }
     ],
     "properties": [
         {
-            "name": "ujar.build.description",
+            "name": "iqkv.build.description",
             "type": "java.lang.String",
             "description": "Project description."
         },
         {
-            "name": "ujar.build.relative-path",
+            "name": "iqkv.build.relative-path",
             "type": "java.lang.String",
             "description": "Application relative path indicator."
         },
         {
-            "name": "ujar.build.version",
+            "name": "iqkv.build.version",
             "type": "java.lang.String",
             "description": "Project version."
         },
@@ -52,65 +52,65 @@
             "defaultValue": true
         },
         {
-            "name": "ujar.kafka.admin",
+            "name": "iqkv.kafka.admin",
             "description": "Allows to create topics on application startup (using Kafka Admin).",
-            "type": "org.ujar.boot.kafka.config.KafkaAdminProperties"
+            "type": "org.iqkv.boot.kafka.config.KafkaAdminProperties"
         },
         {
-            "name": "ujar.kafka.topics",
+            "name": "iqkv.kafka.topics",
             "description": "Topic definitions.",
-            "type": "org.ujar.boot.kafka.config.KafkaTopicDefinitionProperties"
+            "type": "org.iqkv.boot.kafka.config.KafkaTopicDefinitionProperties"
         },
         {
-            "name": "ujar.kafka.topics.keys",
+            "name": "iqkv.kafka.topics.keys",
             "description": "Topic key.",
             "type": "java.lang.String"
         },
         {
-            "name": "ujar.kafka.topics.values",
+            "name": "iqkv.kafka.topics.values",
             "description": "Topic definition.",
-            "type": "org.ujar.boot.kafka.config.topic.TopicDefinition"
+            "type": "org.iqkv.boot.kafka.config.topic.TopicDefinition"
         },
         {
-            "name": "ujar.kafka.error-handling.dead-letter.retention",
+            "name": "iqkv.kafka.error-handling.dead-letter.retention",
             "description": "Retention period for dead letter queue.",
             "type": "java.time.Duration",
-            "sourceType": "org.ujar.boot.kafka.config.errorhandling.DeadLetter"
+            "sourceType": "org.iqkv.boot.kafka.config.errorhandling.DeadLetter"
         },
         {
-            "name": "ujar.kafka.error-handling.dead-letter.suffix",
+            "name": "iqkv.kafka.error-handling.dead-letter.suffix",
             "description": "Customizable DLT suffixed topic name.",
             "type": "java.lang.String",
-            "sourceType": "org.ujar.boot.kafka.config.errorhandling.DeadLetter"
+            "sourceType": "org.iqkv.boot.kafka.config.errorhandling.DeadLetter"
         },
         {
-            "name": "ujar.kafka.error-handling.backoff.initial-interval",
+            "name": "iqkv.kafka.error-handling.backoff.initial-interval",
             "description": "The initial interval in time-based amount.",
             "type": "java.time.Duration",
-            "sourceType": "org.ujar.boot.kafka.config.errorhandling.Backoff"
+            "sourceType": "org.iqkv.boot.kafka.config.errorhandling.Backoff"
         },
         {
-            "name": "ujar.kafka.error-handling.backoff.max-interval",
+            "name": "iqkv.kafka.error-handling.backoff.max-interval",
             "description": "The max interval in time-based amount.",
             "type": "java.time.Duration",
-            "sourceType": "org.ujar.boot.kafka.config.errorhandling.Backoff"
+            "sourceType": "org.iqkv.boot.kafka.config.errorhandling.Backoff"
         },
         {
-            "name": "ujar.kafka.error-handling.backoff.max-retries",
+            "name": "iqkv.kafka.error-handling.backoff.max-retries",
             "description": "The max retries.",
             "type": "java.lang.Integer",
-            "sourceType": "org.ujar.boot.kafka.config.errorhandling.Backoff"
+            "sourceType": "org.iqkv.boot.kafka.config.errorhandling.Backoff"
         },
         {
-            "name": "ujar.kafka.error-handling.backoff.multiplier",
+            "name": "iqkv.kafka.error-handling.backoff.multiplier",
             "description": "The value to multiply the current interval by for each retry attempt.",
             "type": "java.lang.Double",
-            "sourceType": "org.ujar.boot.kafka.config.errorhandling.Backoff"
+            "sourceType": "org.iqkv.boot.kafka.config.errorhandling.Backoff"
         }
     ],
     "hints": [
         {
-            "name": "ujar.kafka.topics.keys",
+            "name": "iqkv.kafka.topics.keys",
             "values": [
                 {
                     "value": "test_topic"
@@ -121,7 +121,7 @@
             ]
         },
         {
-            "name": "ujar.kafka.topics.values",
+            "name": "iqkv.kafka.topics.values",
             "values": [
                 {
                     "value": {
