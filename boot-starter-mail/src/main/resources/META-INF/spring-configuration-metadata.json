@@ -1,0 +1,11 @@
+{
+    "properties": [
+        {
+            "name": "iqkv.mail",
+            "description": "Mail-related configuration options.",
+            "type": "org.iqkv.boot.mail.MailProperties"
+        }
+    ],
+    "hits": [
+    ]
+}

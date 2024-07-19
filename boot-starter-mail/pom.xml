@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.iqkv.boot</groupId>
+    <artifactId>boot-starter-mail</artifactId>
+    <version>24.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>boot-starter-mail</name>
+    <description>Mail support</description>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <organization>
+        <name>IQKV</name>
+        <url>https://iqkv.org</url>
+    </organization>
+    <developers>
+        <developer>
+            <id>dimdnk</id>
+            <name>Dima Denisenko</name>
+            <email>coding@dimdnk.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <parent>
+        <groupId>org.iqkv.boot</groupId>
+        <artifactId>boot-parent-pom</artifactId>
+        <version>24.0.0-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
+
+    <dependencies>
+          <dependency>
+            <groupId>org.iqkv.boot</groupId>
+            <artifactId>boot-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
