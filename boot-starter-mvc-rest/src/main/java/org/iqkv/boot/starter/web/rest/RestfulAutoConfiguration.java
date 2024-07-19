@@ -1,4 +1,4 @@
-package org.iqkv.boot.starter.restful;
+package org.iqkv.boot.starter.web.rest;
 
 import org.iqkv.boot.web.rest.WebConfig;
 import org.springframework.context.annotation.Configuration;
