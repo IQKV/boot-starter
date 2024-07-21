@@ -34,9 +34,8 @@
 
     <parent>
         <groupId>org.iqkv.boot</groupId>
-        <artifactId>boot-parent-pom</artifactId>
+        <artifactId>boot-starter</artifactId>
         <version>24.0.0-SNAPSHOT</version>
-        <relativePath/>
     </parent>
 
     <dependencies>
