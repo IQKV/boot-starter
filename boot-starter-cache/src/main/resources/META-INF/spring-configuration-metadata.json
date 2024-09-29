@@ -3,7 +3,7 @@
         {
             "name": "iqkv.cache",
             "description": "Cache configuration definitions.",
-            "type": "org.iqkv.boot.cache.CacheProperties"
+            "type": "com.iqkv.boot.cache.CacheProperties"
         }
     ]
 }

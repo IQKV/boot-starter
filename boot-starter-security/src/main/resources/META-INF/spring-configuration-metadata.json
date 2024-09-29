@@ -3,7 +3,7 @@
         {
             "name": "iqkv.security",
             "description": "Security-related configuration options.",
-            "type": "org.iqkv.boot.security.SecurityProperties"
+            "type": "com.iqkv.boot.security.SecurityProperties"
         }
     ],
     "hints": [
