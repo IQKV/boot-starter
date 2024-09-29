@@ -3,7 +3,7 @@
         {
             "name": "iqkv.mail",
             "description": "Mail-related configuration options.",
-            "type": "org.iqkv.boot.mail.MailProperties"
+            "type": "com.iqkv.boot.mail.MailProperties"
         }
     ],
     "hints": [

@@ -3,8 +3,8 @@
         {
             "name": "iqkv.build",
             "description": "Application build info.",
-            "type": "org.iqkv.boot.build.ApplicationBuildInfoProperties",
-            "sourceType": "org.iqkv.boot.build.ApplicationBuildInfoProperties"
+            "type": "com.iqkv.boot.build.ApplicationBuildInfoProperties",
+            "sourceType": "com.iqkv.boot.build.ApplicationBuildInfoProperties"
         }
     ],
     "properties": [

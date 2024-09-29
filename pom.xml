@@ -2,7 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.iqkv.boot</groupId>
+    <groupId>com.iqkv.boot</groupId>
     <artifactId>boot-starter</artifactId>
     <version>24.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -20,7 +20,7 @@
 
     <organization>
         <name>IQKV</name>
-        <url>https://iqkv.org</url>
+        <url>https://iqkv.com</url>
     </organization>
     <developers>
         <developer>
@@ -34,7 +34,7 @@
     </developers>
 
     <parent>
-        <groupId>org.iqkv.boot</groupId>
+        <groupId>com.iqkv.boot</groupId>
         <artifactId>boot-parent-pom</artifactId>
         <version>24.0.0-SNAPSHOT</version>
         <relativePath/>
