@@ -1,28 +1,28 @@
 {
-    "groups": [
-        {
-            "name": "iqkv.build",
-            "description": "Application build info.",
-            "type": "com.iqkv.boot.build.ApplicationBuildInfoProperties",
-            "sourceType": "com.iqkv.boot.build.ApplicationBuildInfoProperties"
-        }
-    ],
-    "properties": [
-        {
-            "name": "iqkv.build.description",
-            "type": "java.lang.String",
-            "description": "Project description."
-        },
-        {
-            "name": "iqkv.build.relative-path",
-            "type": "java.lang.String",
-            "description": "Application relative path indicator."
-        },
-        {
-            "name": "iqkv.build.version",
-            "type": "java.lang.String",
-            "description": "Project version."
-        }
-    ],
-    "hints": []
+  "groups": [
+    {
+      "name": "iqkv.build",
+      "description": "Application build info.",
+      "type": "com.iqkv.boot.build.ApplicationBuildInfoProperties",
+      "sourceType": "com.iqkv.boot.build.ApplicationBuildInfoProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "iqkv.build.description",
+      "type": "java.lang.String",
+      "description": "Project description."
+    },
+    {
+      "name": "iqkv.build.relative-path",
+      "type": "java.lang.String",
+      "description": "Application relative path indicator."
+    },
+    {
+      "name": "iqkv.build.version",
+      "type": "java.lang.String",
+      "description": "Project version."
+    }
+  ],
+  "hints": []
 }
