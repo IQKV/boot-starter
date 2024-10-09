@@ -1,9 +1,9 @@
 {
-    "properties": [
-        {
-            "name": "iqkv.cache",
-            "description": "Cache configuration definitions.",
-            "type": "com.iqkv.boot.cache.CacheProperties"
-        }
-    ]
+  "properties": [
+    {
+      "name": "iqkv.cache",
+      "description": "Cache configuration definitions.",
+      "type": "com.iqkv.boot.cache.CacheProperties"
+    }
+  ]
 }

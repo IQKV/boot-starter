@@ -1,11 +1,11 @@
 {
-    "properties": [
-        {
-            "name": "iqkv.security",
-            "description": "Security-related configuration options.",
-            "type": "com.iqkv.boot.security.SecurityProperties"
-        }
-    ],
-    "hints": [
-    ]
+  "properties": [
+    {
+      "name": "iqkv.security",
+      "description": "Security-related configuration options.",
+      "type": "com.iqkv.boot.security.SecurityProperties"
+    }
+  ],
+  "hints": [
+  ]
 }

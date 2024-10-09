@@ -1,137 +1,137 @@
 {
-    "groups": [
+  "groups": [
+    {
+      "name": "iqkv.build",
+      "description": "Application build info.",
+      "type": "com.iqkv.boot.build.ApplicationBuildInfoProperties",
+      "sourceType": "com.iqkv.boot.build.ApplicationBuildInfoProperties"
+    },
+    {
+      "name": "iqkv.kafka.error-handling",
+      "description": "Dead-Latter Topic and Backoff Configuration.",
+      "type": "com.iqkv.boot.kafka.config.KafkaErrorHandlingProperties",
+      "sourceType": "com.iqkv.boot.kafka.config.KafkaErrorHandlingProperties"
+    },
+    {
+      "name": "iqkv.kafka.error-handling.backoff",
+      "type": "com.iqkv.boot.kafka.config.errorhandling.Backoff",
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
+    },
+    {
+      "name": "iqkv.kafka.error-handling.dead-letter",
+      "type": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter",
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter"
+    }
+  ],
+  "properties": [
+    {
+      "name": "iqkv.build.description",
+      "type": "java.lang.String",
+      "description": "Project description."
+    },
+    {
+      "name": "iqkv.build.relative-path",
+      "type": "java.lang.String",
+      "description": "Application relative path indicator."
+    },
+    {
+      "name": "iqkv.build.version",
+      "type": "java.lang.String",
+      "description": "Project version."
+    },
+    {
+      "name": "management.health.kafka.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Whether to enable Kafka health check.",
+      "defaultValue": true
+    },
+    {
+      "name": "management.health.kafka.response-timeout",
+      "type": "java.lang.Integer",
+      "description": "Server response timeout.",
+      "defaultValue": true
+    },
+    {
+      "name": "iqkv.kafka.admin",
+      "description": "Allows to create topics on application startup (using Kafka Admin).",
+      "type": "com.iqkv.boot.kafka.config.KafkaAdminProperties"
+    },
+    {
+      "name": "iqkv.kafka.topics",
+      "description": "Topic definitions.",
+      "type": "com.iqkv.boot.kafka.config.KafkaTopicDefinitionProperties"
+    },
+    {
+      "name": "iqkv.kafka.topics.keys",
+      "description": "Topic key.",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "iqkv.kafka.topics.values",
+      "description": "Topic definition.",
+      "type": "com.iqkv.boot.kafka.config.topic.TopicDefinition"
+    },
+    {
+      "name": "iqkv.kafka.error-handling.dead-letter.retention",
+      "description": "Retention period for dead letter queue.",
+      "type": "java.time.Duration",
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter"
+    },
+    {
+      "name": "iqkv.kafka.error-handling.dead-letter.suffix",
+      "description": "Customizable DLT suffixed topic name.",
+      "type": "java.lang.String",
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter"
+    },
+    {
+      "name": "iqkv.kafka.error-handling.backoff.initial-interval",
+      "description": "The initial interval in time-based amount.",
+      "type": "java.time.Duration",
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
+    },
+    {
+      "name": "iqkv.kafka.error-handling.backoff.max-interval",
+      "description": "The max interval in time-based amount.",
+      "type": "java.time.Duration",
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
+    },
+    {
+      "name": "iqkv.kafka.error-handling.backoff.max-retries",
+      "description": "The max retries.",
+      "type": "java.lang.Integer",
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
+    },
+    {
+      "name": "iqkv.kafka.error-handling.backoff.multiplier",
+      "description": "The value to multiply the current interval by for each retry attempt.",
+      "type": "java.lang.Double",
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
+    }
+  ],
+  "hints": [
+    {
+      "name": "iqkv.kafka.topics.keys",
+      "values": [
         {
-            "name": "iqkv.build",
-            "description": "Application build info.",
-            "type": "com.iqkv.boot.build.ApplicationBuildInfoProperties",
-            "sourceType": "com.iqkv.boot.build.ApplicationBuildInfoProperties"
+          "value": "test_topic"
         },
         {
-            "name": "iqkv.kafka.error-handling",
-            "description": "Dead-Latter Topic and Backoff Configuration.",
-            "type": "com.iqkv.boot.kafka.config.KafkaErrorHandlingProperties",
-            "sourceType": "com.iqkv.boot.kafka.config.KafkaErrorHandlingProperties"
-        },
-        {
-            "name": "iqkv.kafka.error-handling.backoff",
-            "type": "com.iqkv.boot.kafka.config.errorhandling.Backoff",
-            "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
-        },
-        {
-            "name": "iqkv.kafka.error-handling.dead-letter",
-            "type": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter",
-            "sourceType": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter"
+          "value": "test_topic.DLT"
         }
-    ],
-    "properties": [
+      ]
+    },
+    {
+      "name": "iqkv.kafka.topics.values",
+      "values": [
         {
-            "name": "iqkv.build.description",
-            "type": "java.lang.String",
-            "description": "Project description."
-        },
-        {
-            "name": "iqkv.build.relative-path",
-            "type": "java.lang.String",
-            "description": "Application relative path indicator."
-        },
-        {
-            "name": "iqkv.build.version",
-            "type": "java.lang.String",
-            "description": "Project version."
-        },
-        {
-            "name": "management.health.kafka.enabled",
-            "type": "java.lang.Boolean",
-            "description": "Whether to enable Kafka health check.",
-            "defaultValue": true
-        },
-        {
-            "name": "management.health.kafka.response-timeout",
-            "type": "java.lang.Integer",
-            "description": "Server response timeout.",
-            "defaultValue": true
-        },
-        {
-            "name": "iqkv.kafka.admin",
-            "description": "Allows to create topics on application startup (using Kafka Admin).",
-            "type": "com.iqkv.boot.kafka.config.KafkaAdminProperties"
-        },
-        {
-            "name": "iqkv.kafka.topics",
-            "description": "Topic definitions.",
-            "type": "com.iqkv.boot.kafka.config.KafkaTopicDefinitionProperties"
-        },
-        {
-            "name": "iqkv.kafka.topics.keys",
-            "description": "Topic key.",
-            "type": "java.lang.String"
-        },
-        {
-            "name": "iqkv.kafka.topics.values",
-            "description": "Topic definition.",
-            "type": "com.iqkv.boot.kafka.config.topic.TopicDefinition"
-        },
-        {
-            "name": "iqkv.kafka.error-handling.dead-letter.retention",
-            "description": "Retention period for dead letter queue.",
-            "type": "java.time.Duration",
-            "sourceType": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter"
-        },
-        {
-            "name": "iqkv.kafka.error-handling.dead-letter.suffix",
-            "description": "Customizable DLT suffixed topic name.",
-            "type": "java.lang.String",
-            "sourceType": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter"
-        },
-        {
-            "name": "iqkv.kafka.error-handling.backoff.initial-interval",
-            "description": "The initial interval in time-based amount.",
-            "type": "java.time.Duration",
-            "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
-        },
-        {
-            "name": "iqkv.kafka.error-handling.backoff.max-interval",
-            "description": "The max interval in time-based amount.",
-            "type": "java.time.Duration",
-            "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
-        },
-        {
-            "name": "iqkv.kafka.error-handling.backoff.max-retries",
-            "description": "The max retries.",
-            "type": "java.lang.Integer",
-            "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
-        },
-        {
-            "name": "iqkv.kafka.error-handling.backoff.multiplier",
-            "description": "The value to multiply the current interval by for each retry attempt.",
-            "type": "java.lang.Double",
-            "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
+          "value": {
+            "name": "test_topic",
+            "partitions": 1,
+            "retention": "1d"
+          },
+          "description": "Define topic parameters."
         }
-    ],
-    "hints": [
-        {
-            "name": "iqkv.kafka.topics.keys",
-            "values": [
-                {
-                    "value": "test_topic"
-                },
-                {
-                    "value": "test_topic.DLT"
-                }
-            ]
-        },
-        {
-            "name": "iqkv.kafka.topics.values",
-            "values": [
-                {
-                    "value": {
-                        "name": "test_topic",
-                        "partitions": 1,
-                        "retention": "1d"
-                    },
-                    "description": "Define topic parameters."
-                }
-            ]
-        }
-    ]
+      ]
+    }
+  ]
 }
