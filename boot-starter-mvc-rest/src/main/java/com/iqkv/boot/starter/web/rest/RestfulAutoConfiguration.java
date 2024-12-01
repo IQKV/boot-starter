@@ -1,6 +1,6 @@
 package com.iqkv.boot.starter.web.rest;
 
-import com.iqkv.boot.web.rest.WebConfig;
+import com.iqkv.boot.mvc.rest.WebConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
