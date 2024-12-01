@@ -42,7 +42,7 @@
     <dependencies>
         <dependency>
             <groupId>com.iqkv.boot</groupId>
-            <artifactId>boot-build</artifactId>
+            <artifactId>boot-info</artifactId>
         </dependency>
         <dependency>
             <groupId>com.iqkv.boot</groupId>
