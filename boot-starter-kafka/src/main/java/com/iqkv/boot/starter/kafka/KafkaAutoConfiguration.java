@@ -1,6 +1,6 @@
 package com.iqkv.boot.starter.kafka;
 
-import com.iqkv.boot.build.BuildInfoConfig;
+import com.iqkv.boot.info.BuildInfoConfig;
 import com.iqkv.boot.kafka.config.KafkaAdminProperties;
 import com.iqkv.boot.kafka.config.KafkaErrorHandlingProperties;
 import com.iqkv.boot.kafka.config.KafkaHealthIndicatorConfig;

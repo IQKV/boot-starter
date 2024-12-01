@@ -1,6 +1,6 @@
 package com.iqkv.boot.starter.amqp;
 
-import com.iqkv.boot.build.BuildInfoConfig;
+import com.iqkv.boot.info.BuildInfoConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 

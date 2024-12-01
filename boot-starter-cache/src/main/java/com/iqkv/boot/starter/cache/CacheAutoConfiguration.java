@@ -1,6 +1,6 @@
 package com.iqkv.boot.starter.cache;
 
-import com.iqkv.boot.build.BuildInfoConfig;
+import com.iqkv.boot.info.BuildInfoConfig;
 import com.iqkv.boot.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

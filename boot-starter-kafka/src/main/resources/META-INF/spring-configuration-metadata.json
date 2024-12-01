@@ -1,10 +1,10 @@
 {
   "groups": [
     {
-      "name": "iqkv.build",
+      "name": "iqkv.info",
       "description": "Application build info.",
-      "type": "com.iqkv.boot.build.ApplicationBuildInfoProperties",
-      "sourceType": "com.iqkv.boot.build.ApplicationBuildInfoProperties"
+      "type": "com.iqkv.boot.info.ApplicationBuildInfoProperties",
+      "sourceType": "com.iqkv.boot.info.ApplicationBuildInfoProperties"
     },
     {
       "name": "iqkv.kafka.error-handling",
@@ -25,17 +25,17 @@
   ],
   "properties": [
     {
-      "name": "iqkv.build.description",
+      "name": "iqkv.info.description",
       "type": "java.lang.String",
       "description": "Project description."
     },
     {
-      "name": "iqkv.build.relative-path",
+      "name": "iqkv.info.relative-path",
       "type": "java.lang.String",
       "description": "Application relative path indicator."
     },
     {
-      "name": "iqkv.build.version",
+      "name": "iqkv.info.version",
       "type": "java.lang.String",
       "description": "Project version."
     },
