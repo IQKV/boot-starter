@@ -9,7 +9,6 @@
 
     <name>boot-starter</name>
     <modules>
-        <module>boot-starter-observability</module>
         <module>boot-starter-mvc-rest</module>
         <module>boot-starter-security</module>
         <module>boot-starter-mail</module>
