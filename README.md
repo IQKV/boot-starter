@@ -8,6 +8,7 @@ The code follows [Google Code Conventions](https://google.github.io/styleguide/j
 - [PMD](https://pmd.github.io/)
 - [CheckStyle](https://checkstyle.sourceforge.io/)
 - [SpotBugs](https://spotbugs.github.io/)
+- [Qulice](https://www.qulice.com/)
 
 ### Tests
 
