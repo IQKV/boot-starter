@@ -5,7 +5,7 @@
 
     <groupId>com.iqkv.boot</groupId>
     <artifactId>boot-starter-kafka</artifactId>
-    <version>24.0.0-SNAPSHOT</version>
+    <version>25.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>boot-starter-kafka</name>
@@ -34,7 +34,7 @@
     <parent>
         <groupId>com.iqkv.boot</groupId>
         <artifactId>boot-starter</artifactId>
-        <version>24.0.0-SNAPSHOT</version>
+        <version>25.0.0-SNAPSHOT</version>
     </parent>
     <properties>
         <sonar.coverage.exclusions>**/*Config*.java,**/*Properties.java,**/*Test.java,**/Test*.java</sonar.coverage.exclusions>
