@@ -1,25 +1,25 @@
 {
   "groups": [
     {
-      "name": "iqkv.info",
+      "name": "application-settings.info",
       "description": "Application build info.",
-      "type": "com.iqkv.boot.info.ApplicationBuildInfoProperties",
-      "sourceType": "com.iqkv.boot.info.ApplicationBuildInfoProperties"
+      "type": "com.iqkv.boot.info.ApplicationInfoProperties",
+      "sourceType": "com.iqkv.boot.info.ApplicationInfoProperties"
     }
   ],
   "properties": [
     {
-      "name": "iqkv.info.description",
+      "name": "application-settings.info.description",
       "type": "java.lang.String",
       "description": "Project description."
     },
     {
-      "name": "iqkv.info.relative-path",
+      "name": "application-settings.info.relative-path",
       "type": "java.lang.String",
       "description": "Application relative path indicator."
     },
     {
-      "name": "iqkv.info.version",
+      "name": "application-settings.info.version",
       "type": "java.lang.String",
       "description": "Project version."
     }
