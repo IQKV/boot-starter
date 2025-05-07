@@ -1,41 +1,41 @@
 {
   "groups": [
     {
-      "name": "application-settings.info",
+      "name": "expertness.info",
       "description": "Application build info.",
-      "type": "com.iqkv.boot.info.ApplicationInfoProperties",
-      "sourceType": "com.iqkv.boot.info.ApplicationInfoProperties"
+      "type": "expert.uses.boot.info.ApplicationInfoProperties",
+      "sourceType": "expert.uses.boot.info.ApplicationInfoProperties"
     },
     {
-      "name": "application-settings.kafka.error-handling",
+      "name": "expertness.kafka.error-handling",
       "description": "Dead-Latter Topic and Backoff Configuration.",
-      "type": "com.iqkv.boot.kafka.config.KafkaErrorHandlingProperties",
-      "sourceType": "com.iqkv.boot.kafka.config.KafkaErrorHandlingProperties"
+      "type": "expert.uses.boot.kafka.config.KafkaErrorHandlingProperties",
+      "sourceType": "expert.uses.boot.kafka.config.KafkaErrorHandlingProperties"
     },
     {
-      "name": "application-settings.kafka.error-handling.backoff",
-      "type": "com.iqkv.boot.kafka.config.errorhandling.Backoff",
-      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
+      "name": "expertness.kafka.error-handling.backoff",
+      "type": "expert.uses.boot.kafka.config.errorhandling.Backoff",
+      "sourceType": "expert.uses.boot.kafka.config.errorhandling.Backoff"
     },
     {
-      "name": "application-settings.kafka.error-handling.dead-letter",
-      "type": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter",
-      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter"
+      "name": "expertness.kafka.error-handling.dead-letter",
+      "type": "expert.uses.boot.kafka.config.errorhandling.DeadLetter",
+      "sourceType": "expert.uses.boot.kafka.config.errorhandling.DeadLetter"
     }
   ],
   "properties": [
     {
-      "name": "application-settings.info.description",
+      "name": "expertness.info.description",
       "type": "java.lang.String",
       "description": "Project description."
     },
     {
-      "name": "application-settings.info.relative-path",
+      "name": "expertness.info.relative-path",
       "type": "java.lang.String",
       "description": "Application relative path indicator."
     },
     {
-      "name": "application-settings.info.version",
+      "name": "expertness.info.version",
       "type": "java.lang.String",
       "description": "Project version."
     },
@@ -52,65 +52,65 @@
       "defaultValue": true
     },
     {
-      "name": "application-settings.kafka.admin",
+      "name": "expertness.kafka.admin",
       "description": "Allows to create topics on application startup (using Kafka Admin).",
-      "type": "com.iqkv.boot.kafka.config.KafkaAdminProperties"
+      "type": "expert.uses.boot.kafka.config.KafkaAdminProperties"
     },
     {
-      "name": "application-settings.kafka.topics",
+      "name": "expertness.kafka.topics",
       "description": "Topic definitions.",
-      "type": "com.iqkv.boot.kafka.config.KafkaTopicDefinitionProperties"
+      "type": "expert.uses.boot.kafka.config.KafkaTopicDefinitionProperties"
     },
     {
-      "name": "application-settings.kafka.topics.keys",
+      "name": "expertness.kafka.topics.keys",
       "description": "Topic key.",
       "type": "java.lang.String"
     },
     {
-      "name": "application-settings.kafka.topics.values",
+      "name": "expertness.kafka.topics.values",
       "description": "Topic definition.",
-      "type": "com.iqkv.boot.kafka.config.topic.TopicDefinition"
+      "type": "expert.uses.boot.kafka.config.topic.TopicDefinition"
     },
     {
-      "name": "application-settings.kafka.error-handling.dead-letter.retention",
+      "name": "expertness.kafka.error-handling.dead-letter.retention",
       "description": "Retention period for dead letter queue.",
       "type": "java.time.Duration",
-      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter"
+      "sourceType": "expert.uses.boot.kafka.config.errorhandling.DeadLetter"
     },
     {
-      "name": "application-settings.kafka.error-handling.dead-letter.suffix",
+      "name": "expertness.kafka.error-handling.dead-letter.suffix",
       "description": "Customizable DLT suffixed topic name.",
       "type": "java.lang.String",
-      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter"
+      "sourceType": "expert.uses.boot.kafka.config.errorhandling.DeadLetter"
     },
     {
-      "name": "application-settings.kafka.error-handling.backoff.initial-interval",
+      "name": "expertness.kafka.error-handling.backoff.initial-interval",
       "description": "The initial interval in time-based amount.",
       "type": "java.time.Duration",
-      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
+      "sourceType": "expert.uses.boot.kafka.config.errorhandling.Backoff"
     },
     {
-      "name": "application-settings.kafka.error-handling.backoff.max-interval",
+      "name": "expertness.kafka.error-handling.backoff.max-interval",
       "description": "The max interval in time-based amount.",
       "type": "java.time.Duration",
-      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
+      "sourceType": "expert.uses.boot.kafka.config.errorhandling.Backoff"
     },
     {
-      "name": "application-settings.kafka.error-handling.backoff.max-retries",
+      "name": "expertness.kafka.error-handling.backoff.max-retries",
       "description": "The max retries.",
       "type": "java.lang.Integer",
-      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
+      "sourceType": "expert.uses.boot.kafka.config.errorhandling.Backoff"
     },
     {
-      "name": "application-settings.kafka.error-handling.backoff.multiplier",
+      "name": "expertness.kafka.error-handling.backoff.multiplier",
       "description": "The value to multiply the current interval by for each retry attempt.",
       "type": "java.lang.Double",
-      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
+      "sourceType": "expert.uses.boot.kafka.config.errorhandling.Backoff"
     }
   ],
   "hints": [
     {
-      "name": "application-settings.kafka.topics.keys",
+      "name": "expertness.kafka.topics.keys",
       "values": [
         {
           "value": "test_topic"
@@ -121,7 +121,7 @@
       ]
     },
     {
-      "name": "application-settings.kafka.topics.values",
+      "name": "expertness.kafka.topics.values",
       "values": [
         {
           "value": {

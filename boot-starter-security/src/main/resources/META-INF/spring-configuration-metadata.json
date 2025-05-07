@@ -1,9 +1,9 @@
 {
   "properties": [
     {
-      "name": "application-settings.security",
+      "name": "expertness.security",
       "description": "Security-related configuration options.",
-      "type": "com.iqkv.boot.security.SecurityProperties"
+      "type": "expert.uses.boot.security.SecurityProperties"
     }
   ],
   "hints": [

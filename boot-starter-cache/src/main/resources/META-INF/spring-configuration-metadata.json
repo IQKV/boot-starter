@@ -1,9 +1,9 @@
 {
   "properties": [
     {
-      "name": "application-settings.cache",
+      "name": "expertness.cache",
       "description": "Cache configuration definitions.",
-      "type": "com.iqkv.boot.cache.CacheProperties"
+      "type": "expert.uses.boot.cache.CacheProperties"
     }
   ]
 }

@@ -1,25 +1,25 @@
 {
   "groups": [
     {
-      "name": "application-settings.info",
+      "name": "expertness.info",
       "description": "Application build info.",
-      "type": "com.iqkv.boot.info.ApplicationInfoProperties",
-      "sourceType": "com.iqkv.boot.info.ApplicationInfoProperties"
+      "type": "expert.uses.boot.info.ApplicationInfoProperties",
+      "sourceType": "expert.uses.boot.info.ApplicationInfoProperties"
     }
   ],
   "properties": [
     {
-      "name": "application-settings.info.description",
+      "name": "expertness.info.description",
       "type": "java.lang.String",
       "description": "Project description."
     },
     {
-      "name": "application-settings.info.relative-path",
+      "name": "expertness.info.relative-path",
       "type": "java.lang.String",
       "description": "Application relative path indicator."
     },
     {
-      "name": "application-settings.info.version",
+      "name": "expertness.info.version",
       "type": "java.lang.String",
       "description": "Project version."
     }

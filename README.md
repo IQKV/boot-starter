@@ -1,4 +1,4 @@
-# Spring Boot Starters
+# ✨ Spring Boot Starters
 
 ## Code conventions
 

@@ -1,9 +1,9 @@
 {
   "properties": [
     {
-      "name": "application-settings.mail",
+      "name": "expertness.mail",
       "description": "Mail-related configuration options.",
-      "type": "com.iqkv.boot.mail.MailProperties"
+      "type": "expert.uses.boot.mail.MailProperties"
     }
   ],
   "hints": [

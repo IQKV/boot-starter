@@ -1,1 +1,1 @@
-com.iqkv.boot.starter.amqp.AmqpAutoConfiguration
+expert.uses.boot.starter.amqp.AmqpAutoConfiguration
