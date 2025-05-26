@@ -12,7 +12,7 @@ The code follows [Google Code Conventions](https://google.github.io/styleguide/j
 
 ### Tests
 
-This project contains a JUnit tests, Hamcrest matchers, Mockito test doubles, Wiremock stubs, etc.
+This project contains JUnit tests, Hamcrest matchers, Mockito test doubles, Wiremock stubs, etc.
 The minimum percentage of code coverage required for the workflow to pass is **80%**.
 
 > ### Versioning
