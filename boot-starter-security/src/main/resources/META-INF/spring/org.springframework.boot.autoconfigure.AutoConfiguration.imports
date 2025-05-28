@@ -1,1 +1,1 @@
-expert.uses.boot.starter.security.SecurityAutoConfiguration
+com.iqkv.boot.starter.security.SecurityAutoConfiguration

@@ -3,7 +3,7 @@
     {
       "name": "expertness.cache",
       "description": "Cache configuration definitions.",
-      "type": "expert.uses.boot.cache.CacheProperties"
+      "type": "com.iqkv.boot.cache.CacheProperties"
     }
   ]
 }

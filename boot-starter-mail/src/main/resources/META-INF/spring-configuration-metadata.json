@@ -3,7 +3,7 @@
     {
       "name": "expertness.mail",
       "description": "Mail-related configuration options.",
-      "type": "expert.uses.boot.mail.MailProperties"
+      "type": "com.iqkv.boot.mail.MailProperties"
     }
   ],
   "hints": [

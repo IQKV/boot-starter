@@ -1,1 +1,1 @@
-expert.uses.boot.starter.mail.MailAutoConfiguration
+com.iqkv.boot.starter.mail.MailAutoConfiguration

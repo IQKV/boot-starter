@@ -1,1 +1,1 @@
-expert.uses.boot.starter.cache.CacheAutoConfiguration
+com.iqkv.boot.starter.cache.CacheAutoConfiguration

@@ -3,8 +3,8 @@
     {
       "name": "expertness.info",
       "description": "Application build info.",
-      "type": "expert.uses.boot.info.ApplicationInfoProperties",
-      "sourceType": "expert.uses.boot.info.ApplicationInfoProperties"
+      "type": "com.iqkv.boot.info.ApplicationInfoProperties",
+      "sourceType": "com.iqkv.boot.info.ApplicationInfoProperties"
     }
   ],
   "properties": [

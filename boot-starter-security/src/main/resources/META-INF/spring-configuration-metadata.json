@@ -3,7 +3,7 @@
     {
       "name": "expertness.security",
       "description": "Security-related configuration options.",
-      "type": "expert.uses.boot.security.SecurityProperties"
+      "type": "com.iqkv.boot.security.SecurityProperties"
     }
   ],
   "hints": [
