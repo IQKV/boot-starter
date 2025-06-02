@@ -1,7 +1,7 @@
 {
   "groups": [
     {
-      "name": "expertness.info",
+      "name": "application-configuration.info",
       "description": "Application build info.",
       "type": "com.iqkv.boot.info.ApplicationInfoProperties",
       "sourceType": "com.iqkv.boot.info.ApplicationInfoProperties"
@@ -9,17 +9,17 @@
   ],
   "properties": [
     {
-      "name": "expertness.info.description",
+      "name": "application-configuration.info.description",
       "type": "java.lang.String",
       "description": "Project description."
     },
     {
-      "name": "expertness.info.relative-path",
+      "name": "application-configuration.info.relative-path",
       "type": "java.lang.String",
       "description": "Application relative path indicator."
     },
     {
-      "name": "expertness.info.version",
+      "name": "application-configuration.info.version",
       "type": "java.lang.String",
       "description": "Project version."
     }
