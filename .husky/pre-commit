@@ -14,7 +14,7 @@ if [[ ! $current_branch =~ $valid_branch_names ]]; then
     exit 1
 fi
 
-valid_commit="^(feat|fix|rfc|docs|style|refactor|perf|test|chore|build|ci|revert)(.+?)?: .+"
+valid_commit="^(feat|fix|rfc|docs|style|improvement|refactor|perf|test|chore|build|ci|revert)(.+?)?: .+"
 if [[ ! $1 =~ $valid_commit ]]; then
    echo -e "\n🚨 Your commit title did not follow semantic versioning."
     exit 1
