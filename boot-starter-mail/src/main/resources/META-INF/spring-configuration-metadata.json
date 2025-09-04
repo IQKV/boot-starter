@@ -3,7 +3,7 @@
     {
       "name": "application-configuration.mail",
       "description": "Mail-related configuration options.",
-      "type": "com.iqkv.boot.mail.MailProperties"
+      "type": "com.github.dimdnk.boot.mail.MailProperties"
     }
   ],
   "hints": [

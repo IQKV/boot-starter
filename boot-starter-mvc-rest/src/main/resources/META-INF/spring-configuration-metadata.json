@@ -3,8 +3,8 @@
     {
       "name": "application-configuration.info",
       "description": "Application build info.",
-      "type": "com.iqkv.boot.info.ApplicationInfoProperties",
-      "sourceType": "com.iqkv.boot.info.ApplicationInfoProperties"
+      "type": "com.github.dimdnk.boot.info.ApplicationInfoProperties",
+      "sourceType": "com.github.dimdnk.boot.info.ApplicationInfoProperties"
     }
   ],
   "properties": [
