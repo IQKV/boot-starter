@@ -1,5 +1,5 @@
 {
-  "name": "@iqkv/boot-starter",
+  "name": "@dimdnk/boot-starter",
   "version": "25.0.0",
   "private": true,
   "description": "Provide an optional Git commit hooks.",
