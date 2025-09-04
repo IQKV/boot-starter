@@ -2,7 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.iqkv</groupId>
+    <groupId>com.github.dimdnk</groupId>
     <artifactId>boot-starter</artifactId>
     <version>25.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -32,7 +32,7 @@
     </developers>
 
     <parent>
-        <groupId>com.iqkv</groupId>
+        <groupId>com.github.dimdnk</groupId>
         <artifactId>boot-parent-pom</artifactId>
         <version>25.0.0-SNAPSHOT</version>
         <relativePath/>
