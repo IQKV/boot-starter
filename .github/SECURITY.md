@@ -6,6 +6,6 @@ We appreciate your efforts to disclose your findings responsibly and will make e
 
 To report a security issue, go to the project's issues and create a new issue using the ⚠️ Security Report 'issue template'.
 
-Read the instructions of this issue template carefully, and if your report could leak data or might expose how to gain access to a restricted area or break the system, please email [securityincident@iqkv.com](mailto:securityincident@iqkv.com) and include the word "SECURITY" in the subject line.
+Read the instructions of this issue template carefully, and if your report could leak data or might expose how to gain access to a restricted area or break the system, please email [securityincident@knowhowto.dev](mailto:securityincident@knowhowto.dev) and include the word "SECURITY" in the subject line.
 
 We'll endeavour to respond quickly and keep you updated throughout the process.
