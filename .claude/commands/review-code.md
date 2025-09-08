@@ -1,0 +1,1 @@
+Use the subagent java-pro to examine all of the changes by comparing them to the default dev branch. You must verify that every commit and stage on this branch is present, compare them to the default dev branch, and report back to me the review's outcome.
