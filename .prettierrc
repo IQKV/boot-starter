@@ -1,7 +1,8 @@
-{
-  "endOfLine": "auto",
-  "trailingComma": "es5",
-  "tabWidth": 2,
-  "semi": true,
-  "singleQuote": false
-}
+endOfLine: lf
+trailingComma: es5
+tabWidth: 2
+semi: true
+singleQuote: false
+plugins:
+  - prettier-plugin-packagejson
+  - prettier-plugin-java
