@@ -17,7 +17,8 @@
   "lint-staged": {
     "*": [
       "pnpm lint",
-      "pnpm prettier:check"
+      "pnpm prettier:check",
+      "sort-package-json"
     ]
   },
   "config": {
