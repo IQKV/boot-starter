@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 git add .
+npx lint-staged
+
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 main_branch="(main|master|dev|develop)"
@@ -14,13 +16,6 @@ if [[ ! $current_branch =~ $valid_branch_names ]]; then
     exit 1
 fi
 
-valid_commit="^(feat|fix|rfc|docs|style|improvement|enhancement|refactor|perf|test|chore|build|ci|revert)(.+?)?: .+"
-if [[ ! $1 =~ $valid_commit ]]; then
-   echo -e "\n🚨 Your commit title did not follow semantic versioning."
-    exit 1
-fi
-
-npx --no -- commitlint --edit "${1}"
 
 ./mvnw clean validate
 if [ "$?" -ne 0 ]; then
