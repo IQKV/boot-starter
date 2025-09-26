@@ -10,14 +10,14 @@
     "lint:stylelint": "stylelint \"**/*.css\" --cache",
     "node_modules:clear": "rm -rf node_modules",
     "prepare": "husky",
-    "prettier:check": "prettier . --check",
+    "prettier:check": "prettier . --check --ignore-unknown",
     "prettier:write": "prettier . --write",
     "release": "release-it --ci"
   },
   "lint-staged": {
-    "**/*.{js}": [
-      "npm run lint",
-      "prettier . --check --ignore-unknown"
+    "*": [
+      "pnpm lint",
+      "pnpm prettier:check"
     ]
   },
   "config": {
