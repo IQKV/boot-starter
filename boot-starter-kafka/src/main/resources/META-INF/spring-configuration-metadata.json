@@ -3,24 +3,24 @@
     {
       "name": "application-configuration.info",
       "description": "Application build info.",
-      "type": "com.github.dimdnk.boot.info.ApplicationInfoProperties",
-      "sourceType": "com.github.dimdnk.boot.info.ApplicationInfoProperties"
+      "type": "com.iqkv.boot.info.ApplicationInfoProperties",
+      "sourceType": "com.iqkv.boot.info.ApplicationInfoProperties"
     },
     {
       "name": "application-configuration.kafka.error-handling",
       "description": "Dead-Latter Topic and Backoff Configuration.",
-      "type": "com.github.dimdnk.boot.kafka.config.KafkaErrorHandlingProperties",
-      "sourceType": "com.github.dimdnk.boot.kafka.config.KafkaErrorHandlingProperties"
+      "type": "com.iqkv.boot.kafka.config.KafkaErrorHandlingProperties",
+      "sourceType": "com.iqkv.boot.kafka.config.KafkaErrorHandlingProperties"
     },
     {
       "name": "application-configuration.kafka.error-handling.backoff",
-      "type": "com.github.dimdnk.boot.kafka.config.errorhandling.Backoff",
-      "sourceType": "com.github.dimdnk.boot.kafka.config.errorhandling.Backoff"
+      "type": "com.iqkv.boot.kafka.config.errorhandling.Backoff",
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
     },
     {
       "name": "application-configuration.kafka.error-handling.dead-letter",
-      "type": "com.github.dimdnk.boot.kafka.config.errorhandling.DeadLetter",
-      "sourceType": "com.github.dimdnk.boot.kafka.config.errorhandling.DeadLetter"
+      "type": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter",
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter"
     }
   ],
   "properties": [
@@ -54,12 +54,12 @@
     {
       "name": "application-configuration.kafka.admin",
       "description": "Allows to create topics on application startup (using Kafka Admin).",
-      "type": "com.github.dimdnk.boot.kafka.config.KafkaAdminProperties"
+      "type": "com.iqkv.boot.kafka.config.KafkaAdminProperties"
     },
     {
       "name": "application-configuration.kafka.topics",
       "description": "Topic definitions.",
-      "type": "com.github.dimdnk.boot.kafka.config.KafkaTopicDefinitionProperties"
+      "type": "com.iqkv.boot.kafka.config.KafkaTopicDefinitionProperties"
     },
     {
       "name": "application-configuration.kafka.topics.keys",
@@ -69,43 +69,43 @@
     {
       "name": "application-configuration.kafka.topics.values",
       "description": "Topic definition.",
-      "type": "com.github.dimdnk.boot.kafka.config.topic.TopicDefinition"
+      "type": "com.iqkv.boot.kafka.config.topic.TopicDefinition"
     },
     {
       "name": "application-configuration.kafka.error-handling.dead-letter.retention",
       "description": "Retention period for dead letter queue.",
       "type": "java.time.Duration",
-      "sourceType": "com.github.dimdnk.boot.kafka.config.errorhandling.DeadLetter"
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter"
     },
     {
       "name": "application-configuration.kafka.error-handling.dead-letter.suffix",
       "description": "Customizable DLT suffixed topic name.",
       "type": "java.lang.String",
-      "sourceType": "com.github.dimdnk.boot.kafka.config.errorhandling.DeadLetter"
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.DeadLetter"
     },
     {
       "name": "application-configuration.kafka.error-handling.backoff.initial-interval",
       "description": "The initial interval in time-based amount.",
       "type": "java.time.Duration",
-      "sourceType": "com.github.dimdnk.boot.kafka.config.errorhandling.Backoff"
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
     },
     {
       "name": "application-configuration.kafka.error-handling.backoff.max-interval",
       "description": "The max interval in time-based amount.",
       "type": "java.time.Duration",
-      "sourceType": "com.github.dimdnk.boot.kafka.config.errorhandling.Backoff"
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
     },
     {
       "name": "application-configuration.kafka.error-handling.backoff.max-retries",
       "description": "The max retries.",
       "type": "java.lang.Integer",
-      "sourceType": "com.github.dimdnk.boot.kafka.config.errorhandling.Backoff"
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
     },
     {
       "name": "application-configuration.kafka.error-handling.backoff.multiplier",
       "description": "The value to multiply the current interval by for each retry attempt.",
       "type": "java.lang.Double",
-      "sourceType": "com.github.dimdnk.boot.kafka.config.errorhandling.Backoff"
+      "sourceType": "com.iqkv.boot.kafka.config.errorhandling.Backoff"
     }
   ],
   "hints": [

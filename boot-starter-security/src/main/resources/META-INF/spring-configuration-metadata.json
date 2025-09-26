@@ -3,7 +3,7 @@
     {
       "name": "application-configuration.security",
       "description": "Security-related configuration options.",
-      "type": "com.github.dimdnk.boot.security.SecurityProperties"
+      "type": "com.iqkv.boot.security.SecurityProperties"
     }
   ],
   "hints": [
