@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "author": "Dima Denisenko",
   "scripts": {
-    "lint": "npm run lint:stylelint",
+    "lint": "pnpm lint:stylelint",
     "lint:stylelint": "stylelint \"**/*.css\" --cache",
     "node_modules:clear": "rm -rf node_modules",
     "prepare": "husky",
