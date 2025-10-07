@@ -2,7 +2,7 @@
 
 # [Choice] Java version (use -bullseye variants on local arm64/Apple Silicon)
 ARG VARIANT="21"
-FROM mcr.microsoft.com/vscode/devcontainers/java:0-${VARIANT}
+FROM mcr.microsoft.com/vscode/devcontainers/java:1-${VARIANT}
 
 # [Option] Install Maven
 ARG INSTALL_MAVEN="false"
