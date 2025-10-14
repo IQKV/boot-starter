@@ -10,7 +10,7 @@ if [[ $current_branch =~ $main_branch ]]; then
     exit 1
 fi
 
-valid_branch_names="^(feature|rfc|bugfix|improvement|enhancement|library|prerelease|hotfix)\/[a-z0-9._-]+$"
+valid_branch_names="^(feature|rfc|poc|bugfix|improvement|enhancement|library|prerelease|hotfix)\/[a-z0-9._-]+$"
 if [[ ! $current_branch =~ $valid_branch_names ]]; then
     echo -e "\n🚧 Your branch name is illegal. Please rename your branch with using following regex: $valid_branch_names"
     exit 1
