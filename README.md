@@ -1,6 +1,7 @@
 ## Project Purpose
 
-This repository serves as a collection of reusable and configurable Spring Boot Starters aimed at simplifying the development of Spring applications. These starters encapsulate common patterns, configurations, and dependencies, allowing developers to quickly integrate specific functionalities into their projects.
+This repository serves as a collection of reusable and configurable Spring Boot Starters aimed at simplifying the development of Spring applications. These starters encapsulate common
+patterns, configurations, and dependencies, allowing developers to quickly integrate specific functionalities into their projects.
 
 ### Key Objectives
 

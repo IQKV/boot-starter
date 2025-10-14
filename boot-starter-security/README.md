@@ -2,7 +2,8 @@
 
 ## Overview
 
-This starter provides auto-configuration for security in Spring Boot applications. It simplifies the implementation of authentication, authorization, and other security features to protect your application.
+This starter provides auto-configuration for security in Spring Boot applications. It simplifies the implementation of authentication, authorization, and other security features to protect
+your application.
 
 ## Features
 

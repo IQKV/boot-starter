@@ -2,7 +2,8 @@
 
 ## Overview
 
-This starter provides auto-configuration for RabbitMQ messaging in Spring Boot applications. It simplifies the integration of asynchronous messaging capabilities using the Advanced Message Queuing Protocol (AMQP).
+This starter provides auto-configuration for RabbitMQ messaging in Spring Boot applications. It simplifies the integration of asynchronous messaging capabilities using the Advanced Message
+Queuing Protocol (AMQP).
 
 ## Features
 

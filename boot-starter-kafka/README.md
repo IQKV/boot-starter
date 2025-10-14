@@ -2,7 +2,8 @@
 
 ## Overview
 
-This starter provides auto-configuration for Apache Kafka messaging in Spring Boot applications. It simplifies the integration of event streaming capabilities for building distributed, scalable, and fault-tolerant applications.
+This starter provides auto-configuration for Apache Kafka messaging in Spring Boot applications. It simplifies the integration of event streaming capabilities for building distributed,
+scalable, and fault-tolerant applications.
 
 ## Features
 

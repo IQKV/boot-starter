@@ -2,7 +2,8 @@
 
 ## Overview
 
-This starter provides auto-configuration for building RESTful APIs in Spring Boot applications. It includes essential components for creating robust, well-structured REST endpoints with proper error handling and documentation.
+This starter provides auto-configuration for building RESTful APIs in Spring Boot applications. It includes essential components for creating robust, well-structured REST endpoints with
+proper error handling and documentation.
 
 ## Features
 

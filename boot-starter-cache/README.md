@@ -2,7 +2,8 @@
 
 ## Overview
 
-This starter provides auto-configuration for caching in Spring Boot applications. It simplifies the integration of caching capabilities to improve application performance by reducing database load and response times.
+This starter provides auto-configuration for caching in Spring Boot applications. It simplifies the integration of caching capabilities to improve application performance by reducing
+database load and response times.
 
 ## Features
 
