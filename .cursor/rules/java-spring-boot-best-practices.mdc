@@ -77,7 +77,7 @@ Data Access and ORM
 Build and Deployment
 
 - Use Maven for dependency management and build processes.
-- Implement proper profiles for different environments (dev, test, prod).
+- Implement proper profiles for different environments (dev, test, staging, production).
 - Use Docker for containerization if applicable.
 
 Follow best practices for:
