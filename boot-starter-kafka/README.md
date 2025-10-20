@@ -17,7 +17,7 @@ scalable, and fault-tolerant applications.
 
 ### Prerequisites
 
-- Java 25 or higher
+- Java 21 or higher
 - Spring Boot 3.x
 
 ### Installation
