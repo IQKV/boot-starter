@@ -20,7 +20,7 @@ assignees: ""
 
 ---
 
-### **Media prove**
+### **Media proof**
 
 <!-- If applicable, add screenshots or videos to help explain your problem. -->
 
