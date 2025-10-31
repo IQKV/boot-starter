@@ -40,7 +40,7 @@
     <dependencies>
           <dependency>
             <groupId>com.iqkv</groupId>
-            <artifactId>boot-security</artifactId>
+            <artifactId>boot-security-oauth2-jose</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
