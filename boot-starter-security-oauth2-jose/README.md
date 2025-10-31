@@ -27,7 +27,7 @@ your application.
 ```xml
 <dependency>
     <groupId>com.iqkv</groupId>
-    <artifactId>boot-starter-security</artifactId>
+    <artifactId>boot-starter-security-oauth2-jose</artifactId>
     <version>${version}</version>
 </dependency>
 ```

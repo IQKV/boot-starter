@@ -10,7 +10,7 @@
     <name>boot-starter</name>
     <modules>
         <module>boot-starter-mvc-rest</module>
-        <module>boot-starter-security</module>
+        <module>boot-starter-security-oauth2-jose</module>
         <module>boot-starter-mail</module>
         <module>boot-starter-cache</module>
         <module>boot-starter-kafka</module>
