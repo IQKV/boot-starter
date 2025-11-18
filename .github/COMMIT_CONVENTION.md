@@ -7,7 +7,7 @@
 Messages must match the following regex:
 
 ```js
-/^(revert: )?(feat|fix|rfc|docs|style|refactor|test|ci|chore)(\(.+\))?: .{1,120}/;
+/^(revert: )?(feat|fix|rfc|docs|style|refactor|test|ci|chore)(\(.+\))?: .{1,420}/;
 ```
 
 #### Types
@@ -74,7 +74,7 @@ hash is the SHA of the commit being reverted.
 
 ### Type
 
-If the prefix is `feat` or `fix` it will appear in the changelog. However if there is any [BREAKING CHANGE](#footer), the commit will always appear in the changelog.
+If the prefix is `feat` or `fix` it will appear in the changelog. However, if there is any [BREAKING CHANGE](#footer), the commit will always appear in the changelog.
 
 Other prefixes are up to your discretion. Suggested prefixes are `docs`, `chore`, `style`, `refactor`, and `test` for non-changelog related tasks.
 
