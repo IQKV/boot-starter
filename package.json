@@ -7,17 +7,17 @@
   "author": "Dima Denisenko",
   "type": "module",
   "scripts": {
-    "lint": "pnpm lint:stylelint && pnpm prettier:check",
+    "lint": "pnpm lint:stylelint && pnpm formatter:check",
     "lint:stylelint": "stylelint \"**/*.css\" --aei",
     "node_modules:cleanup": "rm -rf node_modules",
     "prepare": "husky",
-    "prettier:check": "prettier . --check --ignore-unknown",
-    "prettier:write": "prettier . --write",
+    "formatter:check": "prettier . --check --ignore-unknown",
+    "formatter:write": "prettier . --write",
     "release": "release-it --ci"
   },
   "lint-staged": {
     "*": [
-      "pnpm prettier:check"
+      "pnpm formatter:check"
     ],
     "package.json": [
       "sort-package-json"
