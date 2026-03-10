@@ -11,8 +11,8 @@
     "lint:stylelint": "stylelint \"**/*.css\" --aei",
     "node_modules:cleanup": "rm -rf node_modules",
     "prepare": "husky",
-    "formatter:check": "prettier . --check --ignore-unknown",
-    "formatter:write": "prettier . --write",
+    "formatter:check": "oxfmt --check",
+    "formatter:write": "oxfmt --write",
     "release": "release-it --ci"
   },
   "lint-staged": {
